@@ -1,0 +1,5 @@
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591613266833"}
+)

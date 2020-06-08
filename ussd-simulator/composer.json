@@ -1,0 +1,31 @@
+{
+  "name": "prinx/ussd-simulator",
+  "type": "application",
+  "description": "Phone simulator for USSD application testing.",
+  "keywords": [
+    "ussd",
+    "simulator"
+  ],
+  "homepage": "https://github.com/Prinx/ussd-simulator",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Prince Damien Dorcis-Akpaglo",
+      "email": "princedorcis@gmail.com",
+      "role": "Developer",
+      "homepage": "https://github.com/Prinx"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.1.0"
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Prinx\\Simulator\\": "src/"
+    }
+  }
+}
