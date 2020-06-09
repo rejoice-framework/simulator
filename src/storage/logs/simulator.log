@@ -1,0 +1,693 @@
+#1 [Tue, 09 06 2020, 06:17:19]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Select preferred choice\n\n1. Restaurants\n2. Home Kitchen\n3. Street Food Vendors\n0. Back","ussdServiceOp":"2","sessionID":"1591681529784"}
+)
+
+
+#2 [Tue, 09 06 2020, 06:17:24]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591683444448"}
+)
+
+
+#3 [Tue, 09 06 2020, 06:17:29]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591683444448"}
+)
+
+
+#4 [Tue, 09 06 2020, 06:17:31]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Select preferred category\n\n1. Food\n2. Groceries\n3. Medication\n4. Utilities\n0. Back","ussdServiceOp":"2","sessionID":"1591683444448"}
+)
+
+
+#5 [Tue, 09 06 2020, 06:20:18]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Select preferred choice\n\n1. Restaurants\n2. Home Kitchen\n3. Street Food Vendors\n0. Back","ussdServiceOp":"2","sessionID":"1591683444448"}
+)
+
+
+#6 [Tue, 09 06 2020, 06:20:19]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Select preferred choice\n\n1. Fiona Foods\n2. Khays Foods\n3. Gari Jollof\n4. Beva Foods\n5. Talatas Kitchen\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591683444448"}
+)
+
+
+#7 [Tue, 09 06 2020, 06:20:21]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Fiona Foods\nNo, 15 Lincoln close,\nCantonments - Accra.\n0546311444\n0243788225\n*380*42*2#\n\n1. Order now\n0. Back","ussdServiceOp":"2","sessionID":"1591683444448"}
+)
+
+
+#8 [Tue, 09 06 2020, 06:20:22]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Select meal\n\n1. Jollof\n2. Fried Rice\n3. Waakye\n4. Banku\n5. Yam and Chips\n6. Khebab\n0. Back","ussdServiceOp":"2","sessionID":"1591683444448"}
+)
+
+
+#9 [Tue, 09 06 2020, 06:20:23]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Jollof\nPlate cost - GHC 15\nEnter quantity\n(Eg. 3)\n\n0. Back","ussdServiceOp":"2","sessionID":"1591683444448"}
+)
+
+
+#10 [Tue, 09 06 2020, 06:23:29]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#11 [Tue, 09 06 2020, 06:23:31]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#12 [Tue, 09 06 2020, 06:23:32]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#13 [Tue, 09 06 2020, 06:23:36]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#14 [Tue, 09 06 2020, 06:23:48]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"1. Settle bet (referee)\n2. Cancel bet\n0. Back","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#15 [Tue, 09 06 2020, 06:23:50]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#16 [Tue, 09 06 2020, 06:23:53]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#17 [Tue, 09 06 2020, 06:23:58]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#18 [Tue, 09 06 2020, 06:24:54]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#19 [Tue, 09 06 2020, 06:24:56]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591683809784"}
+)
+
+
+#20 [Tue, 09 06 2020, 06:26:43]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#21 [Tue, 09 06 2020, 06:26:44]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#22 [Tue, 09 06 2020, 06:26:46]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo Loans portal\n\n1. Find a loan\n2. Request a loan\n3. Find a financial institution\n4. My credit score\n5. My loans \n99. More","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#23 [Tue, 09 06 2020, 06:26:48]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Invalid input\nWelcome to InfoSevo Loans portal\n\n1. Find a loan\n2. Request a loan\n3. Find a financial institution\n4. My credit score\n99. More","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#24 [Tue, 09 06 2020, 06:26:53]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Invalid input\nWelcome to InfoSevo Loans portal\n\n1. Find a loan\n2. Request a loan\n3. Find a financial institution\n4. My credit score\n99. More","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#25 [Tue, 09 06 2020, 06:27:56]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#26 [Tue, 09 06 2020, 06:27:59]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo Loans portal\n\n1. Find a loan\n2. Request a loan\n3. Find a financial institution\n4. My credit score\n5. My loans \n99. More","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#27 [Tue, 09 06 2020, 06:28:02]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#28 [Tue, 09 06 2020, 06:28:10]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#29 [Tue, 09 06 2020, 06:28:21]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#30 [Tue, 09 06 2020, 06:28:29]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#31 [Tue, 09 06 2020, 06:30:23]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#32 [Tue, 09 06 2020, 06:45:10]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#33 [Tue, 09 06 2020, 06:45:11]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#34 [Tue, 09 06 2020, 06:45:17]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591684002959"}
+)
+
+
+#35 [Tue, 09 06 2020, 06:45:19]
+Array
+(
+    [SUCCESS] => 1
+    [data] => <br />
+<b>Notice</b>:  Undefined offset: -1 in <b>F:\laragon\www\ussd\ussd-infosevo-lockdown\app\MenuEntities\DefaultMenuEntities\MyBets.php</b> on line <b>103</b><br />
+<br />
+<b>Notice</
+)
+
+
+#36 [Tue, 09 06 2020, 06:52:31]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591685551045"}
+)
+
+
+#37 [Tue, 09 06 2020, 06:52:33]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591685551045"}
+)
+
+
+#38 [Tue, 09 06 2020, 06:52:35]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591685551045"}
+)
+
+
+#39 [Tue, 09 06 2020, 06:52:38]
+Array
+(
+    [SUCCESS] => 1
+    [data] => <br />
+<b>Warning</b>:  Use of undefined constant condition - assumed 'condition' (this will throw an Error in a future version of PHP) in <b>F:\laragon\www\ussd\ussd-infosevo-lockdown\app\MenuEntities\DefaultMenuEntitie
+)
+
+
+#40 [Tue, 09 06 2020, 06:55:13]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591685713385"}
+)
+
+
+#41 [Tue, 09 06 2020, 06:55:19]
+Array
+(
+    [SUCCESS] => 1
+    [data] => <br />
+<b>Warning</b>:  Use of undefined constant condition - assumed 'condition' (this will throw an Error in a future version of PHP) in <b>F:\laragon\www\ussd\ussd-infosevo-lockdown\app\MenuEntities\DefaultMenuEntitie
+)
+
+
+#42 [Tue, 09 06 2020, 06:55:41]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591685741270"}
+)
+
+
+#43 [Tue, 09 06 2020, 06:55:42]
+Array
+(
+    [SUCCESS] => 1
+    [data] => <br />
+<b>Notice</b>:  Undefined offset: -1 in <b>F:\laragon\www\ussd\ussd-infosevo-lockdown\app\MenuEntities\DefaultMenuEntities\MyBets.php</b> on line <b>103</b><br />
+<br />
+<b>Notice</
+)
+
+
+#44 [Tue, 09 06 2020, 06:55:55]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591685755776"}
+)
+
+
+#45 [Tue, 09 06 2020, 06:55:56]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591685755776"}
+)
+
+
+#46 [Tue, 09 06 2020, 06:55:58]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591685755776"}
+)
+
+
+#47 [Tue, 09 06 2020, 06:56:00]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591685755776"}
+)
+
+
+#48 [Tue, 09 06 2020, 07:02:14]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591686134397"}
+)
+
+
+#49 [Tue, 09 06 2020, 07:02:15]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591686134397"}
+)
+
+
+#50 [Tue, 09 06 2020, 07:02:17]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591686134397"}
+)
+
+
+#51 [Tue, 09 06 2020, 07:02:19]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591686134397"}
+)
+
+
+#52 [Tue, 09 06 2020, 07:02:35]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591686134397"}
+)
+
+
+#53 [Tue, 09 06 2020, 07:02:36]
+Array
+(
+    [SUCCESS] => 1
+    [data] => <br />
+<b>Notice</b>:  Undefined offset: -1 in <b>F:\laragon\www\ussd\ussd-infosevo-lockdown\app\MenuEntities\DefaultMenuEntities\MyBets.php</b> on line <b>103</b><br />
+<br />
+<b>Notice</
+)
+
+
+#54 [Tue, 09 06 2020, 07:09:17]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#55 [Tue, 09 06 2020, 07:09:18]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#56 [Tue, 09 06 2020, 07:09:20]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#57 [Tue, 09 06 2020, 07:09:21]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"No more bet.\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#58 [Tue, 09 06 2020, 07:09:30]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"No more bet.\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#59 [Tue, 09 06 2020, 07:09:32]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#60 [Tue, 09 06 2020, 07:09:37]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"No more bet.\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#61 [Tue, 09 06 2020, 07:09:42]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"No more bet.\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#62 [Tue, 09 06 2020, 07:16:51]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#63 [Tue, 09 06 2020, 07:16:53]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"No more bet.\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#64 [Tue, 09 06 2020, 07:17:10]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591686557336"}
+)
+
+
+#65 [Tue, 09 06 2020, 07:17:13]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591687033513"}
+)
+
+
+#66 [Tue, 09 06 2020, 07:17:14]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591687033513"}
+)
+
+
+#67 [Tue, 09 06 2020, 07:17:17]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591687033513"}
+)
+
+
+#68 [Tue, 09 06 2020, 07:17:19]
+Array
+(
+    [SUCCESS] => 1
+    [data] => <br />
+<b>Notice</b>:  Undefined variable: offset_id in <b>F:\laragon\www\ussd\ussd-infosevo-lockdown\app\MenuEntities\DefaultMenuEntities\MyBets.php</b> on line <b>120</b><br />
+{"message":"Hi, you have 3 bets outstandi
+)
+
+
+#69 [Tue, 09 06 2020, 07:36:38]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591688198526"}
+)
+
+
+#70 [Tue, 09 06 2020, 07:36:40]
+Array
+(
+    [SUCCESS] => 1
+    [data] => <br />
+<b>Notice</b>:  Undefined variable: fetched_bets_number in <b>F:\laragon\www\ussd\ussd-infosevo-lockdown\app\MenuEntities\DefaultMenuEntities\MyBets.php</b> on line <b>108</b><br />
+{"message":"Hi, you have 3 bets
+)
+
+
+#71 [Tue, 09 06 2020, 07:37:04]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591688222380"}
+)
+
+
+#72 [Tue, 09 06 2020, 07:37:05]
+Array
+(
+    [SUCCESS] => 1
+    [data] => Undefined method `lastBetIdName` in class App\MenuEntities\DefaultMenuEntities\MyBets
+in file F:\laragon\www\ussd\ussd-infosevo-lockdown\vendor\prinx\rejoice\src\MenuEntity.php:109<br />
+<b>Notice</b>:  Undefined variable: to_log in <b>F:\laragon\www\ussd\ussd-infosevo-lockdown\app\Helpers\Log.php</b> on line <b>23</b><br />
+
+)
+
+
+#73 [Tue, 09 06 2020, 07:38:16]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591688296326"}
+)
+
+
+#74 [Tue, 09 06 2020, 07:38:18]
+Array
+(
+    [SUCCESS] => 1
+    [data] => Undefined method `lastBetIdName` in class App\MenuEntities\DefaultMenuEntities\MyBets
+in file F:\laragon\www\ussd\ussd-infosevo-lockdown\vendor\prinx\rejoice\src\MenuEntity.php:109
+)
+
+
+#75 [Tue, 09 06 2020, 07:41:39]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591688499568"}
+)
+
+
+#76 [Tue, 09 06 2020, 07:41:40]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n99. More\n0. Back","ussdServiceOp":"2","sessionID":"1591688499568"}
+)
+
+
+#77 [Tue, 09 06 2020, 07:41:44]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591688499568"}
+)
+
+
+#78 [Tue, 09 06 2020, 07:42:33]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591688553168"}
+)
+
+
+#79 [Tue, 09 06 2020, 07:42:34]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"No more bet.\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n4. Show more\n0. Back","ussdServiceOp":"2","sessionID":"1591688553168"}
+)
+
+
+#80 [Tue, 09 06 2020, 07:44:13]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Do you want to continue from where you left?\n\n1. Continue last session\n2. Restart","ussdServiceOp":"2","sessionID":"1591688653897"}
+)
+
+
+#81 [Tue, 09 06 2020, 07:44:15]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to InfoSevo.\n\n1. Delivery market\n2. Betting Market\n3. Loans Market\n4. Insurance Market\n5. Time Killers\n6. Business directory","ussdServiceOp":"2","sessionID":"1591688653897"}
+)
+
+
+#82 [Tue, 09 06 2020, 07:44:17]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Welcome to the InfoSevo Betting Portal.\n\n1. Bet against friend\n2. Betting Houses\n3. My bets\n4. Betting tips\n0. Back","ussdServiceOp":"2","sessionID":"1591688653897"}
+)
+
+
+#83 [Tue, 09 06 2020, 07:44:19]
+Array
+(
+    [SUCCESS] => 1
+    [data] => {"message":"Hi, you have 3 bets outstandings.\nSelect a bet:\n\n1. Burna Boy to wi... (Own)\n2. Stonebwoy\\'s No... (Own)\n3. Stonebwoy\\'s No... (Own)\n0. Back","ussdServiceOp":"2","sessionID":"1591688653897"}
+)
+
+
+#84 [Tue, 09 06 2020, 07:44:29]
+Array
+(
+    [SUCCESS] => 1
+    [data] => STRING EXPECTED.
+The function 'message' must return a string if the menu itself does not have any message. Check the documentation to learn more on how to use 'feed_' functions.
+in file F:\laragon\www\ussd\ussd-infosevo-lockdown\vendor\prinx\rejoice\src\Kernel.php:779
+)
+
+
