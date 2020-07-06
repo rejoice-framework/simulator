@@ -3,7 +3,7 @@ namespace Prinx\Simulator\Libs;
 
 class Request
 {
-    protected $required_params = [
+    protected $requiredParams = [
         'endpoint',
         'msisdn',
         'network',
@@ -15,14 +15,14 @@ class Request
     public function __construct()
     {
         $this->data = $_POST;
-        $this->validateParams($this->data);
+        $this->checkRequiredParams($this->data);
     }
 
-    public function validateParams($params)
+    public function checkRequiredParams($params)
     {
-        foreach ($this->required_params as $param) {
+        foreach ($this->requiredParams as $param) {
             if (!isset($params[$param])) {
-                exit('"' . $param . '" parameter is required');
+                throw new \Exception('Parameter"' . $param . '" is required');
             }
         }
     }

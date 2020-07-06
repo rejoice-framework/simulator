@@ -1,6 +1,78 @@
 <?php
 require_once __DIR__ . '/../../../autoload.php';
+
 use function Prinx\Dotenv\env;
+use Prinx\Utils\DB;
+
+$env = env('APP_ENV', 'prod');
+$rawSimulatorData = '{}';
+
+$jsonFile = realpath(__DIR__ . '/../../../../') . '/simulator.json';
+if (file_exists($jsonFile)) {
+    $rawSimulatorData = file_get_contents($jsonFile);
+}
+
+$data = json_decode($rawSimulatorData, true);
+$networks = $data['networks'] ?? [];
+
+function groupUssdBy(string $column, array $ussds)
+{
+    $columns = ['id', 'app_name', 'network', 'code', 'url'];
+
+    if (!in_array($column, $columns)) {
+        return [];
+    }
+
+    $grouped = [];
+    foreach ($ussds as $ussd) {
+        if (!isset($grouped[$ussd[$column]])) {
+            $grouped[$ussd[$column]] = [];
+        }
+
+        $group = [];
+        foreach ($columns as $value) {
+            if ($value !== $column) {
+                $group[$value] = $ussd[$value];
+            }
+        }
+
+        $grouped[$ussd[$column]][] = $group;
+    }
+
+    return $grouped;
+}
+
+function retrieveSavedUssdEndpoints()
+{
+    $params = [
+        'driver' => env('USSD_ENDPOINT_DRIVER', 'mysql'),
+        'host' => env('USSD_ENDPOINT_HOST', 'localhost'),
+        'port' => env('USSD_ENDPOINT_PORT', 3306),
+        'dbname' => env('USSD_ENDPOINT_DB', ''),
+        'user' => env('USSD_ENDPOINT_DB_USER', ''),
+        'password' => env('USSD_ENDPOINT_DB_PASS', ''),
+    ];
+
+    try {
+        $db = DB::load($params);
+    } catch (\Throwable $th) {
+        return [];
+    }
+
+    $ussdTable = env('USSD_ENDPOINT_DB_TABLE', '');
+    $numUssdEnpointsToRetrieve = env('USSD_ENDPOINT_NUM_TO_RETRIEVE', 300);
+
+    $stmt = $db->prepare("SELECT * FROM `$ussdTable` ORDER BY id DESC LIMIT :to_retrieve");
+    $stmt->bindParam('to_retrieve', $numUssdEnpointsToRetrieve, \PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    return $result;
+}
+
+$ussds = retrieveSavedUssdEndpoints();
+$endpoints = groupUssdBy('endpoint', $ussds);
+
 ?>
 
 <!DOCTYPE html>
@@ -10,71 +82,116 @@ use function Prinx\Dotenv\env;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>USSD SIMULATOR</title>
-
+    <link rel="icon" href="favicon.png" />
     <link rel="stylesheet" href="public/css/bootstrap.min.css" />
     <link rel="stylesheet" href="public/css/style.css">
 </head>
 
-<!--
-Do not remove the inline styles, unless you've got a way to do what the are
-doing without using an inline style.
-These CSS are just here to force the body to have always it initial style.
-Those here are purposely to prevent the modification of the body's font
-property when a PHP error occured at the server side (When an error occured,
-the error is returned by PHP in an HTML formatted way, thus it comes as a whole
-HTML page on itself, meaning it come with a title, a meta tag and CSS styles,
-etc. The CSS styles verride the default CSS of the page resulting in unwanted
-look of the page.)
--->
-
-<body style="line-height: normal; font-size:initial; font-family: initial; color:initial">
+<body style="line-height:normal; font-size:initial; font-family:initial; color:initial">
     <header>
         <div class="toggle-controls" title="Controls">&Congruent;</div>
+        <div class="m-2 ml-4" style="display:inline-block;"><a href="app/network.php" class="ml-4">Manage
+                Networks</a> </div>
+        <div class="m-2" style="display:inline-block;"><a href="app/phone.php">Manage Phones</a></div>
     </header>
 
     <main class="container">
         <div id="controls" class="controls-hidden">
             <form>
-                <div class="form-field">
-                    <label class="text-primary" for="shortcode">SHORTCODE: </label> <br>
-                    <input name="shortcode" id="shortcode" type="text" pattern="\*\d{1,}(\*\d{1,})*#" autocomplete="on"
-                           value="<?php echo env('SHORTCODE') ?>" />
-                </div>
-                <div class="form-field">
-                    <label class="text-primary" for="endpoint">ENDPOINT: </label> <br>
-                    <input name="endpoint" id="endpoint" type="url" autofocus autocomplete="on"
-                           value="<?php echo env('APP_URL') ?>" />
-                </div>
-                <div class="form-field">
-                    <label class="text-primary" for="msisdn">MSISDN: </label> <br>
-                    <select name="msisdn" id="msisdn" autocomplete="on">
-                        <option value="233545466796">PRINCE MTN</option>
-                        <option value="233204038261">MIKE MTN</option>
-                        <option value="233242245046">RAZAK MTN</option>
-                        <option value="+233200822158">+233200822158(test phone)</option>
-                        <option value="+233268652437">+233268652437(test phone)</option>
-                        <option value="233549143481">233549143481</option>
-                        <option value="+233200821963">+233200821963(test phone)</option>
-                        <option value="+233504940867">+233504940867</option>
-                        <option value="+233200820280">+233200820280</option>
+                <div class="px-3 pt-1 m-0" style="font-size:0.7rem">QUICK CONFIG</div>
+                <hr>
+                <div class="form-field form-group" title="The application's endpoint">
+                    <label class="text-primary" for="endpoint">THE USSD APP TO TEST: </label> <br>
+                    <select id="retrieved-endpoints" class="custom-select">
+                        <?php if ($endpoints) { ?>
+                            <option selected disabled>Choose a saved endpoint</option>
+
+                            <?php foreach ($endpoints as $url => $endpointData) { ?>
+                                <option data-code="<?php echo $endpointData[0]['code'] ?? '' ?>" value="<?php echo $url ?>" title="<?php echo $url ?>">
+                                    <?php echo $endpointData[0]['name'] ?: $url ?></option>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <option selected disabled>No saved endpoint found</option>
+                        <?php } ?>
                     </select>
                 </div>
 
-                <div class="form-field">
-                    <label class="text-primary" for="network">NETWORK: </label> <br>
-                    <select name="network" id="network">
-                        <option value="01">MTN</option>
-                        <option value="07">GLO</option>
-                        <option value="03">TIGO</option>
-                        <option value="02">VODAFONE</option>
-                        <option value="03">AIRTEL</option>
+                <div class="form-field form-group">
+                    <label class="text-primary" for="retrieved-phone-number">THE PHONE NUMBER TO USE: </label> <br>
+                    <select id="retrieved-phone-number" class="custom-select">
+                        <option selected disabled>Choose a test phone</option>
+                        <?php foreach ($networks as $networkName => $networkData) {
+                            $testPhones = $networkData['test_phones'] ?? [] ?>
+                            <optgroup label="<?php echo $networkName ?>">
+                                <?php foreach ($testPhones as $number => $phoneData) { ?>
+                                    <option data-mnc="<?php echo $networkData['mnc'] ?? '' ?>" value="<?php echo $number ?>">
+                                        <?php echo $phoneData['name'] ?? $number ?></option>
+                                <?php } ?>
+                            </optgroup>
+                        <?php } ?>
                     </select>
                 </div>
+                <div class="form-field form-group">
+                    <label class="text-primary text-uppercase" for="retrieved-networks">NETWORK: </label> <br>
+                    <select name="retrieved-networks" id="retrieved-networks" class="custom-select">
+                        <?php if ($networks) { ?>
+                            <option disabled selected>Select a network</option>
+
+                            <?php foreach ($networks as $networkName => $networkData) { ?>
+                                <option value="<?php echo $networkData['mnc'] ?>">
+                                    <?php echo $networkName ?>
+                                </option>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <option disabled selected>No network configured.</option>
+                        <?php } ?>
+                    </select>
+                    <small class="text-muted unknown-network-error" style="font-size:10px;display:none;"><br>Network and
+                        number mismatch</small>
+                </div>
+
+                <hr>
+                <div class="px-3 pt-1 m-0" style="font-size:0.7rem">CUSTOM CONFIG</div>
+                <hr>
+
+                <!-- <div class="form-field mb-1 p-1 rounded alert-info">Custom Config</div> -->
+                <div class="form-field form-group" title="The application's endpoint">
+                    <label class="text-primary" for="endpoint">APPLICATION'S ENDPOINT: </label>
+                    <br>
+                    <input name="endpoint" id="endpoint" type="url" autofocus autocomplete="on" value="<?php echo env('APP_URL', '') ?>" placeholder="https://..." />
+                </div>
+
+                <div class="form-field form-group">
+                    <label class="text-primary" for="msisdn">PHONE NUMBER: </label> <br>
+                    <input name="msisdn" id="msisdn" type="tel" value="<?php echo env('TEST_PHONE', '') ?>" placeholder="+..." autocomplete="on">
+
+                    <small class="text-muted unknown-network-error" style="font-size:10px;display:none;"><br>Unable
+                        to determine the network
+                        of
+                        this
+                        number.<br>
+                        Kindly select the
+                        proper
+                        network.</small>
+                </div>
+
+                <div class="form-field form-group">
+                    <label class="text-primary" for="network">NETWORK MNC: </label> <br>
+                    <input name="network" id="network" type="text" autocomplete="on">
+                    <small class="text-muted unknown-network-error" style="font-size:10px;display:none;"><br>Network and
+                        number mismatch</small>
+                </div>
+
+                <div class="form-field form-group" title="May be required by some  applications">
+                    <label class="text-primary" for="ussdCode">USSD CODE: </label> <br>
+                    <input name="ussdCode" id="ussdCode" class="ussdCode" type="text" pattern="\*\d{1,}(\*\d{1,})*#" autocomplete="on" value="<?php echo env('USSD_CODE', '') ?>" />
+                </div>
+
                 <div class="form-field">
                     <small id="loading">Press "DIAL" to initiate a request.</small>
                 </div>
 
-                <div class="form-field">
+                <div class="form-field form-group">
                     <button type="button" class="cancel">CANCEL</button>
                     <button class="send" type="submit">DIAL</button>
                 </div>
@@ -97,19 +214,19 @@ look of the page.)
                                 <div></div>
                                 <div></div>
                             </div>
-                            <div style="font-size: 13px">Processing USSD...</div>
+                            <div style="font-size: 13px">USSD code running...</div>
                         </div>
 
-                        <div id="dial-shortcode">
-                            <div id="dial-shortcode-icon" class="send">&#x1F4DE;</div>
-                            <div id="dial-shortcode-tooltip" contenteditable>*380*75#</div>
+                        <div id="dial-ussdCode">
+                            <div id="dial-ussdCode-icon" class="send">&#x1F4DE;</div>
+                            <div id="dial-ussdCode-tooltip" contenteditable></div>
                         </div>
 
                         <div id="ussd-popup">
                             <form>
                                 <div id="ussd-popup-content"></div>
                                 <div id="simulator-response-input-field">
-                                    <input name="simulator-response-input" id="simulator-response-input" type="text" />
+                                    <input name="simulator-response-input" id="simulator-response-input" type="text" minLength="1" maxLength="160" title="Input a response" />
                                 </div>
                                 <div id="phone" class="ussd-popup-ctrl">
                                     <button type="button" class="cancel">CANCEL</button>
@@ -122,14 +239,45 @@ look of the page.)
             </div>
 
             <div id="simulator-debug" class="col-md">
-                <div class="text-primary">RESPONSE:</div>
-                <div id="simulator-debug-content"></div>
-                <div id="simulator-warning-content"></div>
-                <div id="simulator-info-content"></div>
+                <!-- <div class="text-primary">RESPONSE:</div> -->
+                <!-- <div></div> -->
+                <div id="simulator-debug-content" style="" class="card">
+                    <div class="card-header text-primary">RESPONSE PAYLOAD</div>
+                    <div class="card-body">
+                        <div class="card-text"></div>
+                    </div>
+                </div>
+                <div id="simulator-warning-content" style="display:none;" class="card">
+                    <div class="card-header text-warning">WARNING</div>
+                    <div class="card-body">
+                        <div class="card-text"></div>
+                    </div>
+                </div>
+                <div id="simulator-info-content" style="display:none;" class="card">
+                    <div class="card-header text-info">INFO</div>
+                    <div class="card-body">
+                        <div class="card-text"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
+    <div class="d-none" id="simulator-data"><?php echo $rawSimulatorData ?></div>
+
+    <template class="simulator-debug-template">
+        <div class="card">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <!-- <h4 class="card-title"></h4> -->
+                <div class="card-text"></div>
+            </div>
+            <!-- <div class="card-footer text-muted"> </div> -->
+        </div>
+    </template>
+
     <script src="public/js/jquery-3.1.0.min.js"></script>
+    <!-- <script src="public/js/popper.min.js"></script>
+    <script src="public/js/bootstrap.min.js"></script> -->
     <script src="public/js/ussdsim.js"></script>
 </body>
 

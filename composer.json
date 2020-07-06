@@ -12,13 +12,14 @@
     {
       "name": "Prince Damien Dorcis-Akpaglo",
       "email": "princedorcis@gmail.com",
-      "role": "Developer",
+      "role": "Maintainer",
       "homepage": "https://github.com/Prinx"
     }
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": ">=5.1.0"
+    "php": ">=5.1.0",
+    "prinx/phputils": ">=0.1.0"
   },
   "config": {
     "optimize-autoloader": true

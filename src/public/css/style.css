@@ -144,6 +144,7 @@ button {
 
 .form-field input[type="text"],
 .form-field input[type="url"],
+.form-field input[type="tel"],
 .form-field select {
   width: 70%;
   padding: 5px;
@@ -158,6 +159,10 @@ button {
   border: none;
 }
 */
+
+.form-field label {
+  font-size: 13px;
+}
 
 #simulator-response-input {
   width: 100%;
@@ -177,7 +182,7 @@ button {
   margin: 18px 0 5px 0;
 }
 
-.ussd-popup-ctrl > button {
+.ussd-popup-ctrl>button {
   background: none;
   color: blue;
   font-weight: 500;
@@ -262,7 +267,7 @@ button {
   margin-top: 20px;
 }
 
-#dial-shortcode {
+#dial-ussdCode {
   text-align: center;
   position: relative;
   top: 60%;
@@ -276,11 +281,11 @@ button {
   user-select: none;
 }
 
-#dial-shortcode-icon:hover {
+#dial-ussdCode-icon:hover {
   box-shadow: 1px 3px 15px rgba(0, 0, 0, 0.7);
 }
 
-#dial-shortcode-icon {
+#dial-ussdCode-icon {
   height: 100%;
   width: 100%;
   font-size: 20px;
@@ -292,11 +297,11 @@ button {
   align-items: center;
 }
 
-#dial-shortcode:hover #dial-shortcode-tooltip {
+#dial-ussdCode:hover #dial-ussdCode-tooltip {
   visibility: visible;
 }
 
-#dial-shortcode-tooltip {
+#dial-ussdCode-tooltip {
   visibility: hidden;
   display: inline-block;
   background-color: white;
@@ -309,16 +314,16 @@ button {
   transform: translate(-50%, -50%);
 }
 
-#dial-shortcode-tooltip::before {
+#dial-ussdCode-tooltip::before {
   content: "\2328";
   padding: 0 10px 0 0;
 }
 
-#dial-shortcode-tooltip:focus {
+#dial-ussdCode-tooltip:focus {
   border: none;
 }
 
-#dial-shortcode-tooltip::after {
+#dial-ussdCode-tooltip::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -332,10 +337,13 @@ button {
 #controls {
   /*   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  height: 100%; */
+  justify-content: flex-start; */
   min-width: 30%;
+  height: 100vh;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
 }
+
 /*
 #controls,
 #simulator-debug,
@@ -350,6 +358,7 @@ button {
 #phone-bg {
   transition: all 0.5s ease;
 }
+
 /* #controls > div {
   padding-left: 30px;
 } */
