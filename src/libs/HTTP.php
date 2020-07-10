@@ -18,14 +18,28 @@ namespace Prinx\Simulator\Libs;
  */
 class HTTP
 {
-    public static function post($postvars, $endpoint, $requestDescription = '')
-    {
-        $curl_handle = curl_init();
-        curl_setopt($curl_handle, CURLOPT_URL, $endpoint);
-        curl_setopt($curl_handle, CURLOPT_POST, 1);
-        curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $postvars);
-        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+    public static function post(
+        array $payload,
+        string $endpoint,
+        string $requestDescription = '',
+        array $customCurlOptions = []
+    ) {
+        $defaultCurlOptions = [
+            CURLOPT_URL => $endpoint,
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => $payload,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_ENCODING => 'UTF-8',
+            CURLOPT_CONNECTTIMEOUT => 30,
+            CURLOPT_TIMEOUT => 60,
+        ];
+        $curlOptions = array_replace_recursive(
+            $defaultCurlOptions,
+            $customCurlOptions
+        );
 
+        $curl_handle = curl_init();
+        curl_setopt_array($curl_handle, $curlOptions);
         $result = curl_exec($curl_handle);
         $err = curl_error($curl_handle);
         curl_close($curl_handle);

@@ -366,3 +366,29 @@ button {
 p {
   margin: 0;
 }
+
+.code-running:after {
+  content: '';
+  animation: dots 3s steps(5, end) infinite;
+}
+
+@keyframes dots {
+
+  0%,
+  20% {
+    content: '.';
+  }
+
+  40% {
+    content: '..';
+  }
+
+  60% {
+    content: '...';
+  }
+
+  90%,
+  100% {
+    content: '';
+  }
+}

@@ -103,16 +103,17 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                 <div class="form-field form-group" title="The application's endpoint">
                     <label class="text-primary" for="endpoint">THE USSD APP TO TEST: </label> <br>
                     <select id="retrieved-endpoints" class="custom-select">
-                        <?php if ($endpoints) { ?>
-                            <option selected disabled>Choose a saved endpoint</option>
+                        <?php if ($endpoints) {?>
+                        <option selected disabled>Choose a saved endpoint</option>
 
-                            <?php foreach ($endpoints as $url => $endpointData) { ?>
-                                <option data-code="<?php echo $endpointData[0]['code'] ?? '' ?>" value="<?php echo $url ?>" title="<?php echo $url ?>">
-                                    <?php echo $endpointData[0]['name'] ?: $url ?></option>
-                            <?php } ?>
-                        <?php } else { ?>
-                            <option selected disabled>No saved endpoint found</option>
-                        <?php } ?>
+                        <?php foreach ($endpoints as $url => $endpointData) {?>
+                        <option data-code="<?php echo $endpointData[0]['code'] ?? '' ?>" value="<?php echo $url ?>"
+                                title="<?php echo $url ?>">
+                            <?php echo $endpointData[0]['name'] ?: $url ?></option>
+                        <?php }?>
+                        <?php } else {?>
+                        <option selected disabled>No saved endpoint found</option>
+                        <?php }?>
                     </select>
                 </div>
 
@@ -121,30 +122,30 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                     <select id="retrieved-phone-number" class="custom-select">
                         <option selected disabled>Choose a test phone</option>
                         <?php foreach ($networks as $networkName => $networkData) {
-                            $testPhones = $networkData['test_phones'] ?? [] ?>
-                            <optgroup label="<?php echo $networkName ?>">
-                                <?php foreach ($testPhones as $number => $phoneData) { ?>
-                                    <option data-mnc="<?php echo $networkData['mnc'] ?? '' ?>" value="<?php echo $number ?>">
-                                        <?php echo $phoneData['name'] ?? $number ?></option>
-                                <?php } ?>
-                            </optgroup>
-                        <?php } ?>
+    $testPhones = $networkData['test_phones'] ?? []?>
+                        <optgroup label="<?php echo $networkName ?>">
+                            <?php foreach ($testPhones as $number => $phoneData) {?>
+                            <option data-mnc="<?php echo $networkData['mnc'] ?? '' ?>" value="<?php echo $number ?>">
+                                <?php echo $phoneData['name'] ?? $number ?></option>
+                            <?php }?>
+                        </optgroup>
+                        <?php }?>
                     </select>
                 </div>
                 <div class="form-field form-group">
                     <label class="text-primary text-uppercase" for="retrieved-networks">NETWORK: </label> <br>
                     <select name="retrieved-networks" id="retrieved-networks" class="custom-select">
-                        <?php if ($networks) { ?>
-                            <option disabled selected>Select a network</option>
+                        <?php if ($networks) {?>
+                        <option disabled selected>Select a network</option>
 
-                            <?php foreach ($networks as $networkName => $networkData) { ?>
-                                <option value="<?php echo $networkData['mnc'] ?>">
-                                    <?php echo $networkName ?>
-                                </option>
-                            <?php } ?>
-                        <?php } else { ?>
-                            <option disabled selected>No network configured.</option>
-                        <?php } ?>
+                        <?php foreach ($networks as $networkName => $networkData) {?>
+                        <option value="<?php echo $networkData['mnc'] ?>">
+                            <?php echo $networkName ?>
+                        </option>
+                        <?php }?>
+                        <?php } else {?>
+                        <option disabled selected>No network configured.</option>
+                        <?php }?>
                     </select>
                     <small class="text-muted unknown-network-error" style="font-size:10px;display:none;"><br>Network and
                         number mismatch</small>
@@ -158,12 +159,14 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                 <div class="form-field form-group" title="The application's endpoint">
                     <label class="text-primary" for="endpoint">APPLICATION'S ENDPOINT: </label>
                     <br>
-                    <input name="endpoint" id="endpoint" type="url" autofocus autocomplete="on" value="<?php echo env('APP_URL', '') ?>" placeholder="https://..." />
+                    <input name="endpoint" id="endpoint" type="url" autofocus autocomplete="on"
+                           value="<?php echo env('APP_URL', '') ?>" placeholder="https://..." />
                 </div>
 
                 <div class="form-field form-group">
                     <label class="text-primary" for="msisdn">PHONE NUMBER: </label> <br>
-                    <input name="msisdn" id="msisdn" type="tel" value="<?php echo env('TEST_PHONE', '') ?>" placeholder="+..." autocomplete="on">
+                    <input name="msisdn" id="msisdn" type="tel" value="<?php echo env('TEST_PHONE', '') ?>"
+                           placeholder="+..." autocomplete="on">
 
                     <small class="text-muted unknown-network-error" style="font-size:10px;display:none;"><br>Unable
                         to determine the network
@@ -184,7 +187,8 @@ $endpoints = groupUssdBy('endpoint', $ussds);
 
                 <div class="form-field form-group" title="May be required by some  applications">
                     <label class="text-primary" for="ussdCode">USSD CODE: </label> <br>
-                    <input name="ussdCode" id="ussdCode" class="ussdCode" type="text" pattern="\*\d{1,}(\*\d{1,})*#" autocomplete="on" value="<?php echo env('USSD_CODE', '') ?>" />
+                    <input name="ussdCode" id="ussdCode" class="ussdCode" type="text" pattern="\*\d{1,}(\*\d{1,})*#"
+                           autocomplete="on" value="<?php echo env('USSD_CODE', '') ?>" />
                 </div>
 
                 <div class="form-field">
@@ -214,7 +218,7 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                                 <div></div>
                                 <div></div>
                             </div>
-                            <div style="font-size: 13px">USSD code running...</div>
+                            <div class="code-running" style="font-size: 13px">USSD code running</div>
                         </div>
 
                         <div id="dial-ussdCode">
@@ -226,7 +230,8 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                             <form>
                                 <div id="ussd-popup-content"></div>
                                 <div id="simulator-response-input-field">
-                                    <input name="simulator-response-input" id="simulator-response-input" type="text" minLength="1" maxLength="160" title="Input a response" />
+                                    <input name="simulator-response-input" id="simulator-response-input" type="text"
+                                           minLength="1" maxLength="160" title="Input a response" />
                                 </div>
                                 <div id="phone" class="ussd-popup-ctrl">
                                     <button type="button" class="cancel">CANCEL</button>
@@ -241,20 +246,23 @@ $endpoints = groupUssdBy('endpoint', $ussds);
             <div id="simulator-debug" class="col-md">
                 <!-- <div class="text-primary">RESPONSE:</div> -->
                 <!-- <div></div> -->
-                <div id="simulator-debug-content" style="" class="card">
-                    <div class="card-header text-primary">RESPONSE PAYLOAD</div>
-                    <div class="card-body">
-                        <div class="card-text"></div>
-                    </div>
-                </div>
-                <div id="simulator-warning-content" style="display:none;" class="card">
+                <div id="simulator-warning-content" style="display:none;" class="card m-1">
                     <div class="card-header text-warning">WARNING</div>
                     <div class="card-body">
                         <div class="card-text"></div>
                     </div>
                 </div>
-                <div id="simulator-info-content" style="display:none;" class="card">
-                    <div class="card-header text-info">INFO</div>
+                <div id="simulator-info-content" style="display:none;" class="card m-1">
+                    <div class="card-header text-info">DEBUG<br><small>(Anything <i>echo</i>ed,
+                            <i>var_dump</i>ed
+                            or
+                            <i>print_r</i>ed from the application shows here)</small></div>
+                    <div class="card-body">
+                        <div class="card-text"></div>
+                    </div>
+                </div>
+                <div id="simulator-debug-content" class="card m-1">
+                    <div class="card-header text-primary">RESPONSE PAYLOAD</div>
                     <div class="card-body">
                         <div class="card-text"></div>
                     </div>

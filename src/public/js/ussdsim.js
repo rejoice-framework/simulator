@@ -178,7 +178,7 @@ $(document).ready(function () {
       } catch (error) {
         // Application failed
         responseToProcess.data.message =
-          "Could not parse the response. <br ><small>The response got from the server is not a valid JSON string.<br>It typically means an error happened at the USSD application side. Kindly read the response (above) to know what was the error.";
+          "Simulator could not parse the response.<br><small>The response got from the server is not a valid JSON string.<br>It typically means an error happened at the USSD application's side. Kindly read the response payload (above) to know what was the error.";
         responseToProcess.data.requestType = APP_REQUEST_FAILED;
         console.log(error);
         return responseToProcess;
@@ -266,75 +266,33 @@ $(document).ready(function () {
           break;
       }
 
-      if (responseToProcess.data.INFO) {
-        $("#simulator-info-content .card-text").html(
-          JSON.stringify(responseToProcess.data.INFO)
-        );
-        $("#simulator-info-content").show(250)
-      }
+      const debugResponses = ['WARNING', 'INFO']
 
-      if (responseToProcess.data.WARNING) {
-        $("#simulator-warning-content .card-text").html(
-          JSON.stringify(responseToProcess.data.WARNING)
-        );
-        $("#simulator-warning-content").show(250)
+      for (const type of debugResponses) {
+        const data = responseToProcess.data[type]
+        let html = ''
+
+        if (data) {
+          if (Array.isArray(data)) {
+            for (const key in data) {
+              if (data.hasOwnProperty(key)) {
+                const element = data[key];
+                html += `<div>${typeof element === "string" ? element : key +": "+ JSON.stringify(element)}</div>`;
+              }
+            }
+          } else if (typeof data === "string") {
+            html = data
+          } else {
+            html = JSON.stringify(data)
+          }
+
+          const typeInLower = type.toLowerCase()
+
+          $(`#simulator-${typeInLower}-content .card-text`).html(html);
+          $(`#simulator-${typeInLower}-content`).show(250)
+        }
       }
     }
-
-    //     $.each(responseToProcess, function (key, val) {
-    //       if (key === "response") {
-    //         $("#simulator-debug-content").html(prettyJSON(val));
-    //       }
-
-    //       if (key === "data") {
-    //         // const message = val.message;
-    //         // const requestType = val.requestType;
-    //         // sessionID = val.sessionID;
-
-    //         switch (val.requestType.toString()) {
-    //           case APP_REQUEST_ASK_USER_RESPONSE:
-    //             ussdAskForResponse(val.message);
-    //             break;
-    //           case APP_REQUEST_END:
-    //             ussdEnd(val.message);
-    //             $("#simulator-response-input").blur();
-    //             break;
-    //           case APP_REQUEST_FAILED:
-    //             const error =
-    //               "<span class='text-danger'>ERROR:</span><br>" + val.message;
-    //             const description = responseToProcess.response ?
-    //               responseToProcess.response + "<br><br>" + error :
-    //               error;
-    //             ussdEnd("Application Failed.", description);
-    //             break;
-    //         }
-
-    //         if (responseToProcess.data.INFO) {
-    //           $("#simulator-info-content .card-text").html(
-    //             JSON.stringify(responseToProcess.data.INFO)
-    //           );
-    //           $("#simulator-info-content").show(250)
-    //         }
-
-    //         if (responseToProcess.data.WARNING) {
-    //           $("#simulator-warning-content .card-text").html(
-    //             JSON.stringify(responseToProcess.data.WARNING)
-    //           );
-    //           $("#simulator-warning-content").show(250)
-    //         }
-    //         /*         $("#ussd-popup-content").text(val.message);
-    // $("#ussd-popup").fadeIn(500);
-
-    // switch (val.requestType) {
-    //   case APP_REQUEST_ASK_USER_RESPONSE:
-    //     $("#simulator-response-input").focus();
-    //     break;
-    //   case APP_REQUEST_END:
-    //     $("#simulator-response-input").blur();
-    //     break;
-    // } */
-    //       }
-    //     });
   }
 
   function clearDebugPanel() {
@@ -448,7 +406,7 @@ $(document).ready(function () {
         <ul>
           <li>Check if the endpoint provided is correct.</li>
           <li>Check if the server hosting the application is running.</li>
-          <li>Check if the simulator is running on the same server as your application.</li>
+          <li>Check if the server hosting the simulator can send request to the application's server. (Typically, you cannot call an application on your local machine, from the simulator on a remote server. In that case, the simulator has to be on your local machine too).</li>
         </ul>`;
       } else {
         display = "Application failed.";
