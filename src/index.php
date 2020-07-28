@@ -160,12 +160,12 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                     <label class="text-primary" for="endpoint">APPLICATION'S ENDPOINT: </label>
                     <br>
                     <input name="endpoint" id="endpoint" type="url" autofocus autocomplete="on"
-                           value="<?php echo env('APP_URL', '') ?>" placeholder="https://..." />
+                           value="<?php echo env('USSD_URL', '') ?>" placeholder="https://..." />
                 </div>
 
                 <div class="form-field form-group">
                     <label class="text-primary" for="msisdn">PHONE NUMBER: </label> <br>
-                    <input name="msisdn" id="msisdn" type="tel" value="<?php echo env('TEST_PHONE', '') ?>"
+                    <input name="msisdn" id="msisdn" type="tel" value="<?php echo env('USSD_PHONE', '') ?>"
                            placeholder="+..." autocomplete="on">
 
                     <small class="text-muted unknown-network-error" style="font-size:10px;display:none;"><br>Unable
@@ -244,23 +244,6 @@ $endpoints = groupUssdBy('endpoint', $ussds);
             </div>
 
             <div id="simulator-debug" class="col-md">
-                <!-- <div class="text-primary">RESPONSE:</div> -->
-                <!-- <div></div> -->
-                <div id="simulator-warning-content" style="display:none;" class="card m-1">
-                    <div class="card-header text-warning">WARNING</div>
-                    <div class="card-body">
-                        <div class="card-text"></div>
-                    </div>
-                </div>
-                <div id="simulator-info-content" style="display:none;" class="card m-1">
-                    <div class="card-header text-info">DEBUG<br><small>(Anything <i>echo</i>ed,
-                            <i>var_dump</i>ed
-                            or
-                            <i>print_r</i>ed from the application shows here)</small></div>
-                    <div class="card-body">
-                        <div class="card-text"></div>
-                    </div>
-                </div>
                 <div id="simulator-debug-content" class="card m-1">
                     <div class="card-header text-primary">RESPONSE PAYLOAD</div>
                     <div class="card-body">
@@ -270,7 +253,42 @@ $endpoints = groupUssdBy('endpoint', $ussds);
             </div>
         </div>
     </main>
+    <?php $httpType = $_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'] ? 'http' : 'https';?>
+    <div class="d-none" id="pageUrl"><?php echo $httpType . '://' . $_SERVER['HTTP_HOST']; ?></div>
+
     <div class="d-none" id="simulator-data"><?php echo $rawSimulatorData ?></div>
+    <!-- Post parameters -->
+    <div class="d-none" id="user-response-param-name">
+        <?php echo env('REQUIRED_PARAM_NAME_USER_RESPONSE', 'ussdString') ?>
+    </div>
+    <div class="d-none" id="menu-string-param-name">
+        <?php echo env('REQUIRED_PARAM_NAME_MENU_STRING', 'message') ?>
+    </div>
+    <div class="d-none" id="request-type-param-name">
+        <?php echo env('REQUIRED_PARAM_NAME_REQUEST_TYPE', 'ussdServiceOp') ?>
+    </div>
+    <div class="d-none" id="session-id-param-name"><?php echo env('REQUIRED_PARAM_NAME_SESSION_ID', 'sessionID') ?>
+    </div>
+    <div class="d-none" id="user-phone-param-name"><?php echo env('REQUIRED_PARAM_NAME_USER_PHONE', 'msisdn') ?>
+    </div>
+    <div class="d-none" id="user-network-param-name"><?php echo env('REQUIRED_PARAM_NAME_USER_NETWORK', 'network') ?>
+    </div>
+
+    <!-- Request types -->
+    <div class="d-none" id="ussd-request-init-code"><?php echo env('REQUEST_INIT_CODE', '1') ?>
+    </div>
+    <div class="d-none" id="ussd-request-end-code"><?php echo env('REQUEST_END_CODE', '17') ?>
+    </div>
+    <div class="d-none" id="ussd-request-failed-code"><?php echo env('REQUEST_FAILED_CODE', '3') ?>
+    </div>
+    <div class="d-none" id="ussd-request-cancelled-code"><?php echo env('REQUEST_CANCELLED_CODE', '30') ?>
+    </div>
+    <div class="d-none" id="ussd-request-ask-user-response-code">
+        <?php echo env('REQUEST_ASK_USER_RESPONSE_CODE', '2') ?>
+    </div>
+    <div class="d-none" id="ussd-request-user-sent-response-code">
+        <?php echo env('REQUEST_USER_SENT_RESPONSE_CODE', '18') ?>
+    </div>
 
     <template class="simulator-debug-template">
         <div class="card">

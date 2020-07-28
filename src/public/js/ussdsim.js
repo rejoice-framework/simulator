@@ -1,14 +1,37 @@
 // window.$ = window.jQuery = require("./js/jquery-3.1.0.min.js");
 $(document).ready(function () {
-  const APP_REQUEST_INIT = "1";
-  const APP_REQUEST_END = "17";
-  const APP_REQUEST_FAILED = "3";
-  const APP_REQUEST_CANCELLED = "30";
-  const APP_REQUEST_ASK_USER_RESPONSE = "2";
-  const APP_REQUEST_USER_SENT_RESPONSE = "18";
+  const APP_REQUEST_INIT = $('#ussd-request-init-code').text().trim();
+  const APP_REQUEST_END = $('#ussd-request-end-code').text().trim();
+  const APP_REQUEST_FAILED = $('#ussd-request-failed-code').text().trim();
+  const APP_REQUEST_CANCELLED = $('#ussd-request-cancelled-code').text().trim();
+  const APP_REQUEST_ASK_USER_RESPONSE = $('#ussd-request-ask-user-response-code').text().trim();
+  const APP_REQUEST_USER_SENT_RESPONSE = $('#ussd-request-user-sent-response-code').text().trim();
+
   const SIMULATOR_USSD_API_ENDPOINT = "api/v1/ussd.php"
   const simulatorData = JSON.parse($('#simulator-data').text());
   const networks = simulatorData.networks || {};
+  const simulatorMetadata = ['info', 'warning', 'error']
+
+  const ussdStringKey = $('#user-response-param-name').text().trim()
+  const ussdServiceOpKey = $('#request-type-param-name').text().trim()
+  const sessionIDKey = $('#session-id-param-name').text().trim()
+  const msisdnKey = $('#user-phone-param-name').text().trim()
+  const networkKey = $('#user-network-param-name').text().trim()
+  const messageKey = $('#menu-string-param-name').text().trim()
+
+  const parametersNames = {
+    [messageKey]: "Message",
+    [ussdServiceOpKey]: "Request code",
+    [sessionIDKey]: "Session ID"
+  }
+  const requestTypes = {
+    [APP_REQUEST_INIT]: "USSD session initiation",
+    [APP_REQUEST_END]: "USSD session end",
+    [APP_REQUEST_FAILED]: "USSD request failed. Typically, an error happened at the application's side and the response cannot be decoded by the teleco.",
+    [APP_REQUEST_CANCELLED]: "USSD request cancelled, intentionally by the user or due to timeout",
+    [APP_REQUEST_ASK_USER_RESPONSE]: "The USSD application is requesting for an answer from the user.",
+    [APP_REQUEST_USER_SENT_RESPONSE]: "User has sent a response back to the application",
+  }
 
   let currentRequest = null;
   let sessionID = null;
@@ -30,8 +53,8 @@ $(document).ready(function () {
 
   if (!$("#msisdn").val()) {
     $("#msisdn").val(retrieve("msisdn", "+"))
+    $("#network").val(detectNetwork($("#msisdn").val()))
   }
-
 
   $(".cancel").hide();
   $("form").submit((e) => e.preventDefault());
@@ -68,24 +91,21 @@ $(document).ready(function () {
   $("#network").on("input", handleCustomNetworkChange)
   $("#retrieved-networks").on("change", handleRetrievedNetworkChange)
 
-  /*   const config = { attributes: true, characterData: true };
-  const callback = (mutationList, observer) => {
-    for (let mutation of mutationList) {
-      console.log(mutation);
-
-      if (mutation.type === "attributes") {
-        console.log(mutation);
-      } else if (mutation.type === "charactetData") {
-      }
-    }
-  };
-
-  const observer = new MutationObserver(callback);
-  observer.observe(document.getElementById("ussdCode"), config);
-  observer.observe(document.getElementById("dial-ussdCode-tooltip"), config);
- */
   updateWatch();
   toggleControls();
+  createMetadataCards();
+
+  function createMetadataCards() {
+    for (const metadata of simulatorMetadata) {
+      $('#simulator-debug').prepend(
+        $(`
+        <div id="simulator-${metadata}-content" style="display:none;" class="card m-1">
+          <div class="card-header text-${metadata}">${metadata.toUpperCase()}</div>
+          <div class="card-body"><div class="card-text"></div></div>
+        </div>`)
+      )
+    }
+  }
 
   function save(id, value) {
     if (window.localStorage) {
@@ -166,7 +186,7 @@ $(document).ready(function () {
     let responseToProcess = {
       response,
       data: {
-        sessionID
+        [sessionIDKey]: sessionID
       },
     };
 
@@ -185,16 +205,14 @@ $(document).ready(function () {
       }
     }
 
-    if (parsed.INFO) {
-      responseToProcess.data.INFO = parsed.INFO;
+    for (const metadata of simulatorMetadata) {
+      if (parsed[metadata]) {
+        responseToProcess.data[metadata] = parsed[metadata];
+      }
     }
 
-    if (parsed.WARNING) {
-      responseToProcess.data.WARNING = parsed.WARNING;
-    }
-
-    if (parsed.message !== undefined && parsed.ussdServiceOp !== undefined) {
-      responseToProcess.data.requestType = `${parsed.ussdServiceOp}`;
+    if (parsed.message !== undefined && parsed[ussdServiceOpKey] !== undefined) {
+      responseToProcess.data.requestType = `${parsed[ussdServiceOpKey]}`;
       responseToProcess.data.message = parsed.message ? `${parsed.message}` : 'No message';
 
       if (
@@ -203,13 +221,13 @@ $(document).ready(function () {
       ) {
         // Application Failed.2
         responseToProcess.data.message =
-          "Got Invalid 'ussdServiceOp' from the application on th server.";
+          `Got Invalid '${ussdServiceOpKey}' from the application on th server.`;
         responseToProcess.data.requestType = APP_REQUEST_FAILED;
       }
     } else {
       responseToProcess.data.requestType = APP_REQUEST_FAILED;
       responseToProcess.data.message =
-        "Response parsed successfully but does not contain expected values (message, ussdServiceOp)"; // Application failed with invalid response.
+        `Response parsed successfully but does not contain expected values (${messageKey}, ${ussdServiceOpKey})`; // Application failed with invalid response.
     }
 
     return responseToProcess;
@@ -224,15 +242,23 @@ $(document).ready(function () {
       const toDebug = getValidJson(response)
       if (toDebug) {
         $.each(toDebug, function (key, val) {
-          if (['info', 'warning'].includes(key.toLowerCase())) {
+          if (simulatorMetadata.includes(key.toLowerCase())) {
             return
+          }
+
+          if (key === ussdServiceOpKey) {
+            val = `Code: ${val}<br>Meaning of this code: ${requestTypes[val]}`
+          }
+
+          if (key in parametersNames) {
+            key = parametersNames[key]
           }
 
           $("#simulator-debug-content > .card-body > .card-text").append($(`
             <div class="card">
-                <div class="card-header text-primary">${key}</div>
+                <div class="card-header text-primary"><small>${key}</small></div>
                 <div class="card-body">
-                    <div class="card-text">${val}</div>
+                    <div class="card-text"><small>${val}</small></div>
                 </div>
             </div>          
           `));
@@ -266,11 +292,10 @@ $(document).ready(function () {
           break;
       }
 
-      const debugResponses = ['WARNING', 'INFO']
-
-      for (const type of debugResponses) {
+      for (const type of simulatorMetadata) {
         const data = responseToProcess.data[type]
         let html = ''
+        console.log(data)
 
         if (data) {
           if (Array.isArray(data)) {
@@ -286,10 +311,8 @@ $(document).ready(function () {
             html = JSON.stringify(data)
           }
 
-          const typeInLower = type.toLowerCase()
-
-          $(`#simulator-${typeInLower}-content .card-text`).html(html);
-          $(`#simulator-${typeInLower}-content`).show(250)
+          $(`#simulator-${type}-content .card-text`).html(html);
+          $(`#simulator-${type}-content`).show(250)
         }
       }
     }
@@ -298,10 +321,11 @@ $(document).ready(function () {
   function clearDebugPanel() {
     $("#simulator-debug-content > .card-body > .card-text").html("")
     // $("#simulator-debug-content").hide(250)
-    $("#simulator-info-content > .card-body > .card-text").html("")
-    $("#simulator-info-content").hide(250)
-    $("#simulator-warning-content > .card-body > .card-text").html("")
-    $("#simulator-warning-content").hide(250)
+
+    for (const metadata of simulatorMetadata) {
+      $(`#simulator-${metadata}-content > .card-body > .card-text`).html("")
+      $(`#simulator-${metadata}-content`).hide(250)
+    }
   }
 
   function sendRequest() {
@@ -322,7 +346,6 @@ $(document).ready(function () {
       setTimeout(() => {
         $("#simulator-response-input").prop('placeholder', '')
       }, 5000);
-      // ussdEnd("Empty response not allowed.");
       return;
     }
 
@@ -335,27 +358,6 @@ $(document).ready(function () {
     $(".cancel").html("CANCEL");
     $(".cancel").show();
     $(".send").hide();
-
-    // let requestType;
-    /*
-    if ($("#simulator-response-input").val() != ussdCode && sessionID) {
-      requestType = APP_REQUEST_USER_SENT_RESPONSE;
-    } */
-
-    // if (sessionID === null) {
-    //   requestType = APP_REQUEST_INIT;
-    //   sessionID = newSessionID();
-    //   $("#simulator-response-input").val(ussdCode);
-    // } else {
-    //   requestType = APP_REQUEST_USER_SENT_RESPONSE;
-    // }
-
-    // const userResponse = $("#simulator-response-input").val();
-
-    // if (!userResponse) {
-    //   ussdEnd("Empty response not allowed.");
-    //   return;
-    // }
 
     let endpoint = $("#endpoint").val();
 
@@ -379,19 +381,23 @@ $(document).ready(function () {
       return;
     }
 
-    const network = $("#network").val();
-    /*
-    const url =
-    `api/v1/ussd.php?endpoint=${encodeURIComponent(endpoint)}&type=${requestType}&content=${userResponse}&msisdn=${msisdn}&network=${network}&sessionID=${sessionID}`;
+    let network = $("#network").val();
+    if (!network && msisdn) {
+      network = detectNetwork(msisdn)
+      if (network) {
+        $("#network").val(network);
+      } else {
+        ussdEnd(`Missing network mnc`);
+        return;
+      }
+    }
 
-    currentRequest = $.getJSON(url, processServerResponse);
-    */
     const data = {
-      ussdString: encodeURIComponent(userResponse),
-      ussdServiceOp: encodeURIComponent(requestType),
-      sessionID: encodeURIComponent(sessionID),
-      msisdn: encodeURIComponent(msisdn),
-      network: encodeURIComponent(network),
+      [ussdStringKey]: encodeURIComponent(userResponse),
+      [ussdServiceOpKey]: encodeURIComponent(requestType),
+      [sessionIDKey]: encodeURIComponent(sessionID),
+      [msisdnKey]: encodeURIComponent(msisdn),
+      [networkKey]: encodeURIComponent(network),
       endpoint: encodeURIComponent(endpoint),
     };
 
@@ -400,11 +406,14 @@ $(document).ready(function () {
       let description = "";
 
       if (error.readyState === 0) {
+        const pageUrl = $('#pageUrl').text().trim();
+
         display = "Application not available.";
         description = `Cannot reach the endpoint: <span class='text-danger'>${endpoint}</span>
         <br><br>
         <ul>
-          <li>Check if the endpoint provided is correct.</li>
+          <li>If, using the development server shipped with the simulator, check if the url of this page (<a href="${pageUrl}">${pageUrl}</a>) is still available (simply refresh the page).</li>
+          <li>Check if the ussd endpoint provided is correct.</li>
           <li>Check if the server hosting the application is running.</li>
           <li>Check if the server hosting the simulator can send request to the application's server. (Typically, you cannot call an application on your local machine, from the simulator on a remote server. In that case, the simulator has to be on your local machine too).</li>
         </ul>`;
@@ -456,15 +465,6 @@ $(document).ready(function () {
       $("#loading").html("Request Cancelled.");
     }, 300);
 
-    /*
-    // If no request is in processing but the user click on CANCEL
-    // Might not normally happen because the cancel button is hidden when there is no request.
-    if (sessionID === null) {
-      $("#simulator-debug-content").html('Press "DIAL" to initiate a request.');
-      return;
-    }
-    */
-
     sessionID = null;
 
     if (sendCancelRequest) {
@@ -489,11 +489,11 @@ $(document).ready(function () {
       }
 
       const data = {
-        ussdString: encodeURIComponent(userResponse),
-        ussdServiceOp: encodeURIComponent(requestType),
-        sessionID: encodeURIComponent(sessionID),
-        msisdn: encodeURIComponent(msisdn),
-        network: encodeURIComponent(network),
+        [ussdStringKey]: encodeURIComponent(userResponse),
+        [ussdServiceOpKey]: encodeURIComponent(requestType),
+        [sessionIDKey]: encodeURIComponent(sessionID),
+        [msisdnKey]: encodeURIComponent(msisdn),
+        [networkKey]: encodeURIComponent(network),
       };
 
       const failCallback = (error) => {

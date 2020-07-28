@@ -1,10 +1,10 @@
 <?php
 namespace Prinx\Simulator\Libs;
 
-use Prinx\Simulator\Libs\HTTP;
-use Prinx\Simulator\Libs\Log;
+use Prinx\Notify\Log;
 use Prinx\Simulator\Libs\Request;
 use Prinx\Simulator\Libs\Response;
+use Prinx\Utils\HTTP;
 
 class Simulator
 {
@@ -55,6 +55,21 @@ class Simulator
     public function callUssd()
     {
         return new Response(HTTP::post($this->payload, $this->endpoint));
+    }
+
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    public function setPayload(array $payload)
+    {
+        $this->payload = $payload;
+    }
+
+    public function setEndpoint(string $endpoint)
+    {
+        $this->endpoint = $endpoint;
     }
 
     /**

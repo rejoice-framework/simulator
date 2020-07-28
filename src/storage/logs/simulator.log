@@ -1,0 +1,68 @@
+#1 [WARNING] [Fri, 10 07 2020, 15:41:49]
+{
+    "SUCCESS": false,
+    "error": "Could not resolve host: rejoice-pro"
+}
+
+#2 [WARNING] [Fri, 10 07 2020, 15:51:32]
+{
+    "SUCCESS": false,
+    "data": false,
+    "error": "Could not resolve host: rejoice-pro"
+}
+
+#3 [WARNING] [Fri, 10 07 2020, 15:51:53]
+{
+    "SUCCESS": true,
+    "data": ""
+}
+
+#4 [WARNING] [Fri, 10 07 2020, 16:57:32]
+{
+    "SUCCESS": true,
+    "data": "F:\\laragon\\www\\rejoice-pro\\rejoice\\storage\\sessions{\"message\":\"Action not handled.\\nWelcome to InfoSevo.\\n\\n1. Delivery market\\n2. Betting Market\\n3. Loans Market\\n4. Insurance Market\\n00. Next page\",\"ussdServiceOp\":\"2\",\"sessionID\":\"1594398457447\",\"WARNING\":[\"The next menu `delivery_market::welcome` cannot be found.\"],\"INFO\":[\"\"]}"
+}
+
+#5 [WARNING] [Fri, 10 07 2020, 17:20:27]
+{
+    "SUCCESS": true,
+    "data": "<span class=\"text-danger\">APPLICATION ERROR<\/span><br><br \/>\n<b>Warning<\/b>:  get_class() expects parameter 1 to be object, null given in <b>F:\\laragon\\www\\rejoice-pro\\rejoice\\vendor\\prinx\\rejoice-framework\\src\\Foundation\\Kernel.php<\/b> on line <b>477<\/b><br \/>\n<br><br><span class=\"text-primary\">USSD RESPONSE<\/span><br>{\"message\":\"Action not handled.\\nWelcome to InfoSevo.\\n\\n1. Delivery market\\n2. Betting Market\\n3. Loans Market\\n4. Insurance Market\\n00. Next page\",\"ussdServiceOp\":\"2\",\"sessionID\":\"1594400300119\",\"WARNING\":[\"Neither the menu \\\"delivery_market::welcome\\\" nor the class \\\"\\\" was found. \"]}"
+}
+
+#6 [WARNING] [Fri, 10 07 2020, 17:28:21]
+{
+    "SUCCESS": true,
+    "data": "SQLSTATE[3D000]: Invalid catalog name: 1046 No database selected\nin file F:\\laragon\\www\\rejoice-pro\\rejoice\\app\\Menus\\DeliveryMarketChooseCategory.php:56"
+}
+
+#7 [WARNING] [Fri, 10 07 2020, 19:49:44]
+{
+    "SUCCESS": false,
+    "data": false,
+    "error": "Could not resolve host: rejoice-pro"
+}
+
+#8 [WARNING] [Sat, 11 07 2020, 07:33:57]
+{
+    "SUCCESS": true,
+    "data": "<!DOCTYPE HTML PUBLIC \"-\/\/IETF\/\/DTD HTML 2.0\/\/EN\">\n<html><head>\n<title>404 Not Found<\/title>\n<\/head><body>\n<h1>Not Found<\/h1>\n<p>The requested URL \/rejoice\/publi\/ was not found on this server.<\/p>\n<\/body><\/html>\n"
+}
+
+#9 [WARNING] [Sat, 11 07 2020, 20:43:08]
+{
+    "SUCCESS": true,
+    "data": "<!DOCTYPE HTML PUBLIC \"-\/\/IETF\/\/DTD HTML 2.0\/\/EN\">\n<html><head>\n<title>404 Not Found<\/title>\n<\/head><body>\n<h1>Not Found<\/h1>\n<p>The requested URL \/rejoice\/publi\/ was not found on this server.<\/p>\n<\/body><\/html>\n"
+}
+
+#10 [WARNING] [Mon, 27 07 2020, 12:02:08]
+{
+    "SUCCESS": true,
+    "data": "ERROR CONNECTING TO DATABASE: SQLSTATE[HY000] [2002] Connection timed out in file \/var\/www\/html\/vendor\/prinx\/phputils\/src\/DB.php:50\nin file \/var\/www\/html\/vendor\/prinx\/phputils\/src\/DB.php:52"
+}
+
+#11 [WARNING] [Mon, 27 07 2020, 12:21:01]
+{
+    "SUCCESS": true,
+    "data": "ERROR CONNECTING TO DATABASE: SQLSTATE[HY000] [2002] Connection timed out in file \/var\/www\/html\/vendor\/prinx\/phputils\/src\/DB.php:50 Array\n(\n    [driver] => mysql\n    [host] => 173.16.0.13\n    [port] => 3306\n    [dbname] => txtgh_infosevo\n    [user] => txtgh_infosevo\n    [password] => AMZoqaKMqY\n)\n\nin file \/var\/www\/html\/vendor\/prinx\/phputils\/src\/DB.php:52"
+}
+

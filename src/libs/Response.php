@@ -30,8 +30,23 @@ class Response
         }
     }
 
-    public function data()
+    public function data($key = null)
     {
-        return $this->data;
+        return $key ? $this->get($key) : $this->data;
+    }
+
+    public function isSuccess()
+    {
+        return is_array($this->data) && $this->data['SUCCESS'];
+    }
+
+    public function has($key)
+    {
+        return is_array($this->data) && isset($this->data[$key]);
+    }
+
+    public function get($key = null, $default = null)
+    {
+        return $this->data[$key] ?? $default;
     }
 }
