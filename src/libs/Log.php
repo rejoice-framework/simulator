@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Prinx\Simulator\Libs;
+namespace Rejoice\Simulator\Libs;
 
 /**
  * Default logger.
@@ -91,16 +91,16 @@ class Log
      * it will be converted to string
      * Else, the message will be print with print_r.
      *
-     * @param string $level
-     * @param string|array|object $message
-     * @param const $flag
-     * @return void
+     * @param  string              $level
+     * @param  string|array|object $message
+     * @param  const               $flag
      * @throws \Exception
+     * @return void
      */
     public function log(string $level, $message, $flag = FILE_APPEND)
     {
         if (!method_exists($this, $level)) {
-            throw new \Exception('Log level `' . $level . '` not supported');
+            throw new \Exception('Log level `'.$level.'` not supported');
         }
 
         if (is_string($message)) {
@@ -115,7 +115,7 @@ class Log
 
         $num = intval(file_get_contents($this->cache)) + 1;
 
-        $toLog = '#' . $num . ' [' . strtoupper($level) . '] [' . date("D, d m Y, H:i:s") . "]\n" . $toLog . "\n\n";
+        $toLog = '#'.$num.' ['.strtoupper($level).'] ['.date('D, d m Y, H:i:s')."]\n".$toLog."\n\n";
 
         file_put_contents($this->file, $toLog, $flag);
         file_put_contents($this->cache, $num);
