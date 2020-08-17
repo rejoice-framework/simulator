@@ -1,5 +1,15 @@
 <?php
-namespace Prinx\Simulator\Libs;
+
+/*
+ * This file is part of the Rejoice package.
+ *
+ * (c) Prince Dorcis <princedorcis@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Rejoice\Simulator\Libs;
 
 class Response
 {
@@ -26,7 +36,7 @@ class Response
                 print_r($data);
             }
         } else {
-            echo "Response: " . $this->data['data'] . "<br><br>Error: " . $this->data['error'];
+            echo 'Response: '.$this->data['data'].'<br><br>Error: '.$this->data['error'];
         }
     }
 
