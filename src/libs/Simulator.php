@@ -1,10 +1,20 @@
 <?php
-namespace Prinx\Simulator\Libs;
+
+/*
+ * This file is part of the Rejoice package.
+ *
+ * (c) Prince Dorcis <princedorcis@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Rejoice\Simulator\Libs;
 
 use Prinx\Notify\Log;
-use Prinx\Simulator\Libs\Request;
-use Prinx\Simulator\Libs\Response;
 use Prinx\Utils\HTTP;
+use Rejoice\Simulator\Libs\Request;
+use Rejoice\Simulator\Libs\Response;
 
 class Simulator
 {
@@ -23,6 +33,7 @@ class Simulator
         $this->captureIncomingRequest();
         $response = $this->callUssd();
         $this->log($response);
+
         return $response;
     }
 
@@ -37,7 +48,7 @@ class Simulator
             $this->request = new Request;
         } catch (\Throwable $th) {
             exit(json_encode([
-                'error' => $th->getMessage(),
+                'error'   => $th->getMessage(),
                 'SUCCESS' => false,
             ]));
         }
@@ -75,15 +86,15 @@ class Simulator
     /**
      * Log the response if response cannot be parse to JSON
      *
-     * @param Response $response
+     * @param  Response $response
      * @return void
      */
     public function log(Response $response)
     {
         if (!json_decode($response->data()['data'])) {
-            $dir = realpath(__DIR__ . '/../');
-            $file = $dir . '/storage/logs/simulator.log';
-            $cache = $dir . '/storage/cache/request-count.cache';
+            $dir = realpath(__DIR__.'/../');
+            $file = $dir.'/storage/logs/simulator.log';
+            $cache = $dir.'/storage/cache/request-count.cache';
             $logger = new Log($file, $cache);
             $logger->warning($response->data());
         }
