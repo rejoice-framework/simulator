@@ -1,102 +1,98 @@
 <?php
-/**
- * Make we play small! 🤓
- */
-// error_reporting(E_ALL);
-require_once __DIR__ . '/../../../../autoload.php';
-session_start();
+    require_once __DIR__.'/../../../../autoload.php';
+    session_start();
 
-$error = null;
-$flash = null;
+    $error = null;
+    $flash = null;
 
-if (isset($_SESSION['error'])) {
-    $error = $_SESSION['error'];
-    unset($_SESSION['error']);
-}
+    if (isset($_SESSION['error'])) {
+        $error = $_SESSION['error'];
+        unset($_SESSION['error']);
+    }
 
-if (isset($_SESSION['flash'])) {
-    $flash = $_SESSION['flash'];
-    unset($_SESSION['flash']);
-}
+    if (isset($_SESSION['flash'])) {
+        $flash = $_SESSION['flash'];
+        unset($_SESSION['flash']);
+    }
 
-if (isset($_SESSION['new-phone'])) {
-    $newPhone = $_SESSION['new-phone'];
-    unset($_SESSION['new-phone']);
-}
+    if (isset($_SESSION['new-phone'])) {
+        $newPhone = $_SESSION['new-phone'];
+        unset($_SESSION['new-phone']);
+    }
 
-$data = [];
-$jsonFile = realpath(__DIR__ . '/../../../../../') . '/simulator.json';
+    $data = [];
+    $jsonFile = realpath(__DIR__.'/../../../../../').'/simulator.json';
 
-if (file_exists($jsonFile)) {
-    $data = json_decode(file_get_contents($jsonFile), true);
-}
+    if (file_exists($jsonFile)) {
+        $data = json_decode(file_get_contents($jsonFile), true);
+    }
 
-$networks = $data['networks'] ?? [];
+    $networks = $data['networks'] ?? [];
 
-function guessNetwork($number, $networks)
-{
-    foreach ($networks as $networkName => $networkData) {
-        if (isset($networkData['patterns'])) {
-            foreach ($networkData['patterns'] as $pattern) {
-                if (preg_match('/' . $pattern . '/', $number)) {
-                    return $networkName;
+    function guessNetwork($number, $networks)
+    {
+        foreach ($networks as $networkName => $networkData) {
+            if (isset($networkData['patterns'])) {
+                foreach ($networkData['patterns'] as $pattern) {
+                    if (preg_match('/'.$pattern.'/', $number)) {
+                        return $networkName;
+                    }
                 }
             }
         }
+
+        return false;
     }
 
-    return false;
-}
+    if (isset($_POST['number'])) {
 
-if (isset($_POST['number'])) {
+        $network = $_POST['network'] ?? guessNetwork($_POST['number'], $networks);
 
-    $network = $_POST['network'] ?? guessNetwork($_POST['number'], $networks);
+        if (!$network) {
+            $error = 'Unable to guess the network';
+        } elseif (!isset($networks[$network])) {
+            $error = 'The network specified ('.$network.') does not exist. Kindly create the network <a href="network.php">here</a>';
+        } elseif (isset($_POST['delete-number'])) {
+            if (isset($networks[$network]['test_phones'][$_POST['number']])) {
+                unset($networks[$network]['test_phones'][$_POST['number']]);
+            }
 
-    if (!$network) {
-        $error = "Unable to guess the network";
-    } elseif (!isset($networks[$network])) {
-        $error = 'The network specified (' . $network . ') does not exist. Kindly create the network <a href="network.php">here</a>';
-    } elseif (isset($_POST['delete-number'])) {
-        if (isset($networks[$network]['test_phones'][$_POST['number']])) {
-            unset($networks[$network]['test_phones'][$_POST['number']]);
+            $_SESSION['flash'] = 'Number deleted successfully';
+            $data['networks'] = $networks;
+            file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT));
+            header('Location: ');
+        } else {
+            $number = preg_replace('/[^0-9]/', '', $_POST['number']);
+
+            if (!isset($networks[$network]['test_phones'])) {
+                $networks[$network]['test_phones'] = [];
+            }
+
+            $update = false;
+
+            if (isset($networks[$network]['test_phones'][$number])) {
+                $update = true;
+            }
+
+            $networks[$network]['test_phones'][$number] = [
+                'name' => $_POST['phone-name'] ?? '',
+            ];
+
+            $_SESSION['new-phone'] = $number;
+            $_SESSION['flash'] = 'Number '.($update ? 'updated' : 'added').' successfully';
+
+            $data['networks'] = $networks;
+            file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT));
+            header('Location: ');
         }
-
-        $_SESSION['flash'] = "Number deleted successfully";
-        $data['networks'] = $networks;
-        file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT));
-        header('Location: ');
-    } else {
-        $number = preg_replace('/[^0-9]/', '', $_POST['number']);
-
-        if (!isset($networks[$network]['test_phones'])) {
-            $networks[$network]['test_phones'] = [];
-        }
-
-        $update = false;
-
-        if (isset($networks[$network]['test_phones'][$number])) {
-            $update = true;
-        }
-
-        $networks[$network]['test_phones'][$number] = [
-            'name' => $_POST['phone-name'] ?? '',
-        ];
-
-        $_SESSION['new-phone'] = $number;
-        $_SESSION['flash'] = "Number " . ($update ? "updated" : "added") . " successfully";
-
-        $data['networks'] = $networks;
-        file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT));
-        header('Location: ');
+    } elseif (isset($_POST['network'])) {
+        $error = 'The phone input is required';
+    } elseif (isset($_POST['delete-number']) ||
+        isset($_POST['number']) ||
+        isset($_POST['network'])
+    ) {
+        $error = 'Cannot delete this number.';
     }
-} elseif (isset($_POST['network'])) {
-    $error = 'The phone input is required';
-} elseif (isset($_POST['delete-number']) ||
-    isset($_POST['number']) ||
-    isset($_POST['network'])
-) {
-    $error = "Cannot delete this number.";
-}
 ?>
 
 <!DOCTYPE html>
@@ -126,12 +122,12 @@ if (isset($_POST['number'])) {
 
     <main class="container">
         <?php
-if ($error) {?>
+        if ($error) {?>
         <div class="alert alert-danger"><?php echo $error ?></div>
         <?php
-}
+            }
 
-if ($flash) {?>
+        if ($flash) {?>
         <div class="alert alert-success alert-dismissible fade show not-static-alert" role="alert">
             <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -140,11 +136,11 @@ if ($flash) {?>
             <?php echo $flash; ?>
         </div>
         <?php
-}?>
+        }?>
 
         <?php
-if ($networks) {
-    ?>
+            if ($networks) {
+            ?>
         <div class="row justify-content-center">
             <div class="col-md-6 my-3">
                 <h3>Add new test phone</h3>
@@ -152,32 +148,28 @@ if ($networks) {
                 <form method="POST" action="">
                     <div class="form-field form-group mt-2">
                         <label class="text-primary" for="number">Phone number</label>
-                        <input type="tel" name="number" id="number" class="form-control" placeholder="Phone number"
-                               pattern="\+?[0-9)( -]{7,15}" autofocus required>
+                        <input type="tel" name="number" id="number" class="form-control" placeholder="Phone number" pattern="\+?[0-9)( -]{7,15}" autofocus required>
                     </div>
 
-                    <div class="form-field form-group"
-                         title="The person the phone belongs to or what you want to test the phone with">
+                    <div class="form-field form-group" title="The person the phone belongs to or what you want to test the phone with">
                         <label class="text-primary" for="phone-name">Name</label>
-                        <input type="text" name="phone-name" id="phone-name" class="form-control"
-                               placeholder="Give a name to the number">
+                        <input type="text" name="phone-name" id="phone-name" class="form-control" placeholder="Give a name to the number">
                     </div>
 
                     <div class="form-field form-group">
                         <label class="text-primary" for="network">Network</label><br>
                         <select class="custom-select" name="network" id="network">
-                            <option title="Leave blank to let the application guess automatically the network. It can work only if you have configured the patterns on the networks page"
-                                    disabled selected>
+                            <option title="Leave blank to let the application guess automatically the network. It can work only if you have configured the patterns on the networks page" disabled selected>
                                 Leave blank to let the application guess
                             </option>
 
                             <?php
-foreach ($networks as $networkName => $networkData) {?>
+                            foreach ($networks as $networkName => $networkData) {?>
                             <option value="<?php echo $networkName ?>">
                                 <?php echo $networkName ?>
                             </option>
                             <?php
-}?>
+                            }?>
                         </select>
                     </div>
                     <div class="form-field">
@@ -189,15 +181,14 @@ foreach ($networks as $networkName => $networkData) {?>
                 <h3 class=""> Saved phones numbers</h3>
                 <small class="text-muted">Click on a phone number to edit it</small>
                 <?php foreach ($networks as $networkName => $networkData) {
-        ?>
+                        ?>
                 <div class="card my-2 rounded-0 border-top-0">
                     <div class="card-header row">
-                        <div class="text-primary col-8" title="Modify this network"><a
-                               href="network.php?network=<?php echo $networkName ?>"><?php echo $networkName ?></a>
+                        <div class="text-primary col-8" title="Modify this network"><a href="network.php?network=<?php echo $networkName ?>"><?php echo $networkName ?></a>
                         </div>
 
                         <!-- <div class="col">
-                            mnc: <?php echo $networkData['mnc'] ?? 'MNC not defined' ?>
+                            mnc:                                 <?php echo $networkData['mnc'] ?? 'MNC not defined' ?>
                         </div> -->
                     </div>
                     <div class="card-body">
@@ -207,14 +198,13 @@ foreach ($networks as $networkName => $networkData) {?>
                                 <?php $phones = $networkData['test_phones'] ?? [];if (!$phones) {?>
                                 <i>No phone number added here.</i>
                                 <?php } else {
-            ?>
+                                            ?>
                                 <table class="bg-white table table-responsive table-hover">
                                     <tbody>
                                         <?php foreach ($phones as $number => $phoneData) {
-                if ($number) {
-                    ?>
-                                        <tr data-network="<?php echo $networkName ?>" title="Click to edit"
-                                            class="phone-number-row <?php if (isset($newPhone) && $newPhone == $number/* Do not use strict comparison here */) {echo 'new-phone';}?>">
+                                                            if ($number) {
+                                                            ?>
+                                        <tr data-network="<?php echo $networkName ?>" title="Click to edit" class="phone-number-row                                                                    <?php if (isset($newPhone) && $newPhone == $number/* Do not use strict comparison here */) {echo 'new-phone';}?>">
                                             <td scope="row" class="phone-number">
                                                 <?php echo $number ?>
                                             </td>
@@ -222,15 +212,12 @@ foreach ($networks as $networkName => $networkData) {?>
                                                 <?php echo ($phoneData['name'] ?? '') ?: 'No name' ?>
                                             </td>
                                             <td class="delete-phone-number">
-                                                <form method="POST" action="" class="delete-number"
-                                                      title="Delete this number">
+                                                <form method="POST" action="" class="delete-number" title="Delete this number">
                                                     <input type="hidden" name="delete-number" value="1">
                                                     <input type="hidden" name="number" value="<?php echo $number ?>">
-                                                    <input type="hidden" name="network"
-                                                           value="<?php echo $networkName ?>">
+                                                    <input type="hidden" name="network" value="<?php echo $networkName ?>">
 
-                                                    <input type="submit" class="btn btn-sm btn-danger delete-number-btn"
-                                                           value="x">
+                                                    <input type="submit" class="btn btn-sm btn-danger delete-number-btn" value="x">
                                                 </form>
                                             </td>
                                         </tr>
