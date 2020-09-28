@@ -1,4 +1,3 @@
-// window.$ = window.jQuery = require("./js/jquery-3.1.0.min.js");
 $(document).ready(function () {
   const APP_REQUEST_INIT = $('#ussd-request-init-code').text().trim();
   const APP_REQUEST_END = $('#ussd-request-end-code').text().trim();
@@ -430,11 +429,10 @@ $(document).ready(function () {
       console.error("SEND REQUEST ERROR:", error);
     };
 
-    /**
+    /*
      * Use this line instead if experiencing infinte request in google chrome.
      * currentRequest = $.post(SIMULATOR_USSD_API_ENDPOINT, data);
      */
-    // currentRequest = $.post(endpoint, data);
     currentRequest = $.post(SIMULATOR_USSD_API_ENDPOINT, data);
     currentRequest.done(processServerResponse);
     currentRequest.fail(failCallback);
@@ -453,8 +451,12 @@ $(document).ready(function () {
     setTimeout(() => {
       hideLoader();
       if (!sendCancelRequest) {
-        // This is to resolve a bug with the $("#ussd-popup").fadeOut(300); above. When this function (cancelRequest) is called alone (not called by a click event), $("#ussd-popup").fadeOut(300); does not work? Why?
-        $("#ussd-popup").hide();
+        /* 
+         * This is to resolve a bug with the `$("#ussd-popup").fadeOut(300);` above.
+         * When this function (cancelRequest) is called alone (not called by a click event),
+         * `$("#ussd-popup").fadeOut(300);` does not work? Why?
+         */
+         $("#ussd-popup").hide();
       }
 
       $(".cancel").hide();
@@ -476,6 +478,7 @@ $(document).ready(function () {
 
       if (!endpoint) {
         $("#simulator-debug-content .card-text").text("Missing Endpoint URL");
+
         return;
       }
 
@@ -485,6 +488,7 @@ $(document).ready(function () {
 
       if (!isUrlValid(endpoint)) {
         $("#simulator-debug-content .card-text").text("Invalid Endpoint URL");
+
         return;
       }
 
@@ -498,18 +502,17 @@ $(document).ready(function () {
 
       const failCallback = (error) => {
         /*
-        cancelledRequestCallback({
-          response: "Endpoint unreachable.",
-          data: error.responseText || ""
-          }); */
-        // console.log(error);
+          cancelledRequestCallback({
+            response: "Endpoint unreachable.",
+            data: error.responseText || ""
+          });
+        */
       };
 
-      /**
+      /*
        * Use this line instead if experiencing infinte request in google chrome.
        * currentRequest = $.post(SIMULATOR_USSD_API_ENDPOINT, data);
        */
-      // currentRequest = $.post(endpoint, data);
       currentRequest = $.post(SIMULATOR_USSD_API_ENDPOINT, data);
       currentRequest.done(cancelledRequestCallback);
       currentRequest.fail(failCallback);
@@ -529,17 +532,9 @@ $(document).ready(function () {
     if (data.hasOwnProperty("response")) {
       $("#simulator-debug-content .card-text").html(prettyJSON(data["response"]));
     }
-
-    // for (const key in data) {
-    //   if (data.hasOwnProperty(key) && key == "response") {
-    //     $("#simulator-debug-content").html(prettyJSON(data[key]));
-    //     break;
-    //   }
-    // }
   }
 
   function newSessionID() {
-    // console.log('new ID')
     return new Date().getTime();
   }
 
@@ -743,10 +738,6 @@ $(document).ready(function () {
     } else {
       $("#ussdCode").val('');
     }
-  }
-
-  function ussdCodeInputEvent(event) {
-    // I don't know what I was supposed to do here
   }
 
   function handleCustomNetworkChange(event) {

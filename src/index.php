@@ -1,77 +1,77 @@
 <?php
-require_once __DIR__ . '/../../../autoload.php';
+    require_once __DIR__.'/../../../autoload.php';
 
-use function Prinx\Dotenv\env;
-use Prinx\Utils\DB;
+    use function Prinx\Dotenv\env;
+    use Prinx\Utils\DB;
 
-$env = env('APP_ENV', 'prod');
-$rawSimulatorData = '{}';
+    $env = env('APP_ENV', 'prod');
+    $rawSimulatorData = '{}';
 
-$jsonFile = realpath(__DIR__ . '/../../../../') . '/simulator.json';
-if (file_exists($jsonFile)) {
-    $rawSimulatorData = file_get_contents($jsonFile);
-}
-
-$data = json_decode($rawSimulatorData, true);
-$networks = $data['networks'] ?? [];
-
-function groupUssdBy(string $column, array $ussds)
-{
-    $columns = ['id', 'app_name', 'network', 'code', 'url'];
-
-    if (!in_array($column, $columns)) {
-        return [];
+    $jsonFile = realpath(__DIR__.'/../../../../').'/simulator.json';
+    if (file_exists($jsonFile)) {
+        $rawSimulatorData = file_get_contents($jsonFile);
     }
 
-    $grouped = [];
-    foreach ($ussds as $ussd) {
-        if (!isset($grouped[$ussd[$column]])) {
-            $grouped[$ussd[$column]] = [];
+    $data = json_decode($rawSimulatorData, true);
+    $networks = $data['networks'] ?? [];
+
+    function groupUssdBy(string $column, array $ussds)
+    {
+        $columns = ['id', 'app_name', 'network', 'code', 'url'];
+
+        if (!in_array($column, $columns)) {
+            return [];
         }
 
-        $group = [];
-        foreach ($columns as $value) {
-            if ($value !== $column) {
-                $group[$value] = $ussd[$value];
+        $grouped = [];
+        foreach ($ussds as $ussd) {
+            if (!isset($grouped[$ussd[$column]])) {
+                $grouped[$ussd[$column]] = [];
             }
+
+            $group = [];
+            foreach ($columns as $value) {
+                if ($value !== $column) {
+                    $group[$value] = $ussd[$value];
+                }
+            }
+
+            $grouped[$ussd[$column]][] = $group;
         }
 
-        $grouped[$ussd[$column]][] = $group;
+        return $grouped;
     }
 
-    return $grouped;
-}
+    function retrieveSavedUssdEndpoints()
+    {
+        $params = [
+            'driver'   => env('USSD_ENDPOINT_DRIVER', 'mysql'),
+            'host'     => env('USSD_ENDPOINT_HOST', 'localhost'),
+            'port'     => env('USSD_ENDPOINT_PORT', 3306),
+            'dbname'   => env('USSD_ENDPOINT_DB', ''),
+            'user'     => env('USSD_ENDPOINT_DB_USER', ''),
+            'password' => env('USSD_ENDPOINT_DB_PASS', ''),
+        ];
 
-function retrieveSavedUssdEndpoints()
-{
-    $params = [
-        'driver' => env('USSD_ENDPOINT_DRIVER', 'mysql'),
-        'host' => env('USSD_ENDPOINT_HOST', 'localhost'),
-        'port' => env('USSD_ENDPOINT_PORT', 3306),
-        'dbname' => env('USSD_ENDPOINT_DB', ''),
-        'user' => env('USSD_ENDPOINT_DB_USER', ''),
-        'password' => env('USSD_ENDPOINT_DB_PASS', ''),
-    ];
+        try {
+            $db = DB::load($params);
+        } catch (\Throwable $th) {
+            return [];
+        }
 
-    try {
-        $db = DB::load($params);
-    } catch (\Throwable $th) {
-        return [];
+        $ussdTable = env('USSD_ENDPOINT_DB_TABLE', '');
+        $numUssdEnpointsToRetrieve = env('USSD_ENDPOINT_NUM_TO_RETRIEVE', 300);
+
+        $stmt = $db->prepare("SELECT * FROM `$ussdTable` ORDER BY id DESC LIMIT :to_retrieve");
+        $stmt->bindParam('to_retrieve', $numUssdEnpointsToRetrieve, \PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $result;
     }
 
-    $ussdTable = env('USSD_ENDPOINT_DB_TABLE', '');
-    $numUssdEnpointsToRetrieve = env('USSD_ENDPOINT_NUM_TO_RETRIEVE', 300);
-
-    $stmt = $db->prepare("SELECT * FROM `$ussdTable` ORDER BY id DESC LIMIT :to_retrieve");
-    $stmt->bindParam('to_retrieve', $numUssdEnpointsToRetrieve, \PDO::PARAM_INT);
-    $stmt->execute();
-    $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-    return $result;
-}
-
-$ussds = retrieveSavedUssdEndpoints();
-$endpoints = groupUssdBy('endpoint', $ussds);
+    $ussds = retrieveSavedUssdEndpoints();
+    $endpoints = groupUssdBy('endpoint', $ussds);
 
 ?>
 
@@ -111,7 +111,7 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                                 title="<?php echo $url ?>">
                             <?php echo $endpointData[0]['name'] ?: $url ?></option>
                         <?php }?>
-                        <?php } else {?>
+<?php } else {?>
                         <option selected disabled>No saved endpoint found</option>
                         <?php }?>
                     </select>
@@ -122,7 +122,7 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                     <select id="retrieved-phone-number" class="custom-select">
                         <option selected disabled>Choose a test phone</option>
                         <?php foreach ($networks as $networkName => $networkData) {
-    $testPhones = $networkData['test_phones'] ?? []?>
+                            $testPhones = $networkData['test_phones'] ?? []?>
                         <optgroup label="<?php echo $networkName ?>">
                             <?php foreach ($testPhones as $number => $phoneData) {?>
                             <option data-mnc="<?php echo $networkData['mnc'] ?? '' ?>" value="<?php echo $number ?>">
@@ -143,7 +143,7 @@ $endpoints = groupUssdBy('endpoint', $ussds);
                             <?php echo $networkName ?>
                         </option>
                         <?php }?>
-                        <?php } else {?>
+<?php } else {?>
                         <option disabled selected>No network configured.</option>
                         <?php }?>
                     </select>
@@ -253,10 +253,12 @@ $endpoints = groupUssdBy('endpoint', $ussds);
             </div>
         </div>
     </main>
+
     <?php $httpType = $_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'] ? 'http' : 'https';?>
-    <div class="d-none" id="pageUrl"><?php echo $httpType . '://' . $_SERVER['HTTP_HOST']; ?></div>
+    <div class="d-none" id="pageUrl"><?php echo $httpType.'://'.$_SERVER['HTTP_HOST']; ?></div>
 
     <div class="d-none" id="simulator-data"><?php echo $rawSimulatorData ?></div>
+
     <!-- Post parameters -->
     <div class="d-none" id="user-response-param-name">
         <?php echo env('REQUIRED_PARAM_NAME_USER_RESPONSE', 'ussdString') ?>
@@ -294,16 +296,12 @@ $endpoints = groupUssdBy('endpoint', $ussds);
         <div class="card">
             <div class="card-header"></div>
             <div class="card-body">
-                <!-- <h4 class="card-title"></h4> -->
                 <div class="card-text"></div>
             </div>
-            <!-- <div class="card-footer text-muted"> </div> -->
         </div>
     </template>
 
     <script src="public/js/jquery-3.1.0.min.js"></script>
-    <!-- <script src="public/js/popper.min.js"></script>
-    <script src="public/js/bootstrap.min.js"></script> -->
     <script src="public/js/ussdsim.js"></script>
 </body>
 

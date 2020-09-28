@@ -258,8 +258,13 @@ button {
 #simulator-debug-content,
 #simulator-warning-content,
 #simulator-info-content {
-  /* color: #234; */
   font-size: 15px;
+}
+
+#simulator-debug-content small,
+#simulator-warning-content small,
+#simulator-info-content small {
+  white-space: pre-wrap;
 }
 
 #simulator-warning-content,
