@@ -84,7 +84,8 @@ class Simulator
     /**
      * Log the response if response cannot be parse to JSON.
      *
-     * @param  Response $response
+     * @param Response $response
+     *
      * @return void
      */
     public function log(Response $response)
