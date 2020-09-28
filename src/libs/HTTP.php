@@ -12,7 +12,7 @@
 namespace Rejoice\Simulator\Libs;
 
 /**
- * HTTP requests utility class
+ * HTTP requests utility class.
  *
  * @author Prince Dorcis <princedorcis@gmail.com>
  */

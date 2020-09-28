@@ -203,7 +203,7 @@
                 <h3 class=""> Saved networks</h3>
                 <small class="text-muted">Click on a network to edit it</small>
                 <?php foreach ($networks as $networkName => $networkData) {
-                    ?>
+            ?>
                 <div class="card my-2 rounded-0 border-top-0 network-container">
                     <div class="card-header row">
                         <div class="text-primary col-6" title="Modify this network"><a href="?network=<?php echo $networkName ?>"><?php echo $networkName ?></a>
@@ -226,7 +226,8 @@
                         </div>
                     </div>
                 </div>
-                <?php }?>
+                <?php
+        }?>
             </div>
         </div>
 

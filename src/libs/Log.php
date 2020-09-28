@@ -83,7 +83,7 @@ class Log
     }
 
     /**
-     * Log method for any level
+     * Log method for any level.
      *
      * If $message is string, it will be logged as-is.
      * If message is an array, it will be converted to json

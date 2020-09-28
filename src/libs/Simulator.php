@@ -13,8 +13,6 @@ namespace Rejoice\Simulator\Libs;
 
 use Prinx\Notify\Log;
 use Prinx\Utils\HTTP;
-use Rejoice\Simulator\Libs\Request;
-use Rejoice\Simulator\Libs\Response;
 
 class Simulator
 {
@@ -24,7 +22,7 @@ class Simulator
 
     /**
      * Capture the request coming from the simulator interface, send the
-     * request to the application and return the response
+     * request to the application and return the response.
      *
      * @return Response
      */
@@ -38,7 +36,7 @@ class Simulator
     }
 
     /**
-     * Capture request from the simulator interface
+     * Capture request from the simulator interface.
      *
      * @return void
      */
@@ -59,7 +57,7 @@ class Simulator
     }
 
     /**
-     * Send the HTTP request to the USSD application and return the response
+     * Send the HTTP request to the USSD application and return the response.
      *
      * @return Response
      */
@@ -84,7 +82,7 @@ class Simulator
     }
 
     /**
-     * Log the response if response cannot be parse to JSON
+     * Log the response if response cannot be parse to JSON.
      *
      * @param  Response $response
      * @return void

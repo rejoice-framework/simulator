@@ -45,7 +45,6 @@
     }
 
     if (isset($_POST['number'])) {
-
         $network = $_POST['network'] ?? guessNetwork($_POST['number'], $networks);
 
         if (!$network) {
@@ -140,7 +139,7 @@
 
         <?php
             if ($networks) {
-            ?>
+                ?>
         <div class="row justify-content-center">
             <div class="col-md-6 my-3">
                 <h3>Add new test phone</h3>
@@ -169,7 +168,7 @@
                                 <?php echo $networkName ?>
                             </option>
                             <?php
-                            }?>
+                            } ?>
                         </select>
                     </div>
                     <div class="form-field">
@@ -181,7 +180,7 @@
                 <h3 class=""> Saved phones numbers</h3>
                 <small class="text-muted">Click on a phone number to edit it</small>
                 <?php foreach ($networks as $networkName => $networkData) {
-                        ?>
+                                ?>
                 <div class="card my-2 rounded-0 border-top-0">
                     <div class="card-header row">
                         <div class="text-primary col-8" title="Modify this network"><a href="network.php?network=<?php echo $networkName ?>"><?php echo $networkName ?></a>
@@ -195,16 +194,19 @@
                         <!-- <h6 class="card-title network-mnc">Numbers</h6> -->
                         <div class="card-text row justify-content-center">
                             <div>
-                                <?php $phones = $networkData['test_phones'] ?? [];if (!$phones) {?>
+                                <?php $phones = $networkData['test_phones'] ?? [];
+                                if (!$phones) {?>
                                 <i>No phone number added here.</i>
                                 <?php } else {
-                                            ?>
+                                    ?>
                                 <table class="bg-white table table-responsive table-hover">
                                     <tbody>
                                         <?php foreach ($phones as $number => $phoneData) {
-                                                            if ($number) {
-                                                            ?>
-                                        <tr data-network="<?php echo $networkName ?>" title="Click to edit" class="phone-number-row                                                                    <?php if (isset($newPhone) && $newPhone == $number/* Do not use strict comparison here */) {echo 'new-phone';}?>">
+                                        if ($number) {
+                                            ?>
+                                        <tr data-network="<?php echo $networkName ?>" title="Click to edit" class="phone-number-row                                                                    <?php if (isset($newPhone) && $newPhone == $number/* Do not use strict comparison here */) {
+                                                echo 'new-phone';
+                                            } ?>">
                                             <td scope="row" class="phone-number">
                                                 <?php echo $number ?>
                                             </td>
@@ -221,18 +223,23 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                        <?php }}?>
+                                        <?php
+                                        }
+                                    } ?>
                                     </tbody>
                                 </table>
-                                <?php }?>
+                                <?php
+                                } ?>
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php }?>
+                <?php
+                            } ?>
             </div>
         </div>
-        <?php } else {?>
+        <?php
+            } else {?>
         <div class="alert alert-info">No network not defined. Every number must belong to a previously defined
             network.
             Kindly
