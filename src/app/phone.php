@@ -187,7 +187,7 @@
                         </div>
 
                         <!-- <div class="col">
-                            mnc:                                                                                                                                                                                                                                 <?php echo $networkData['mnc'] ?? 'MNC not defined' ?>
+                            mnc: <?php /* echo $networkData['mnc'] ?? 'MNC not defined' */ ?>
                         </div> -->
                     </div>
                     <div class="card-body">

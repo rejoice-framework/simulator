@@ -63,6 +63,7 @@
      */
 
     $networks = $data['networks'] ?? [];
+
     if (isset($_POST['network'])) {
         $network = $_POST['network'];
 
@@ -91,9 +92,6 @@
             }
 
             $mnc = htmlspecialchars(strval($_POST['mnc']));
-            // if (!$update && in_array($mnc, $data['mnc_index'])) {
-            //     $error = 'The mnc ' . $mnc . ' already belongs to another network';
-            // }
 
             $patterns = explode("\r\n", $_POST['patterns'] ?? '');
             $networks[$network]['patterns'] = $patterns;
@@ -119,6 +117,7 @@
         $error = 'Cannot delete this network.';
     } elseif (isset($_GET['network'])) {
         $network = htmlspecialchars($_GET['network']);
+
         if (isset($networks[$network])) {
             $networkName = $network;
             $mnc = $networks[$network]['mnc'];
@@ -203,7 +202,7 @@
                 <h3 class=""> Saved networks</h3>
                 <small class="text-muted">Click on a network to edit it</small>
                 <?php foreach ($networks as $networkName => $networkData) {
-            ?>
+                    ?>
                 <div class="card my-2 rounded-0 border-top-0 network-container">
                     <div class="card-header row">
                         <div class="text-primary col-6" title="Modify this network"><a href="?network=<?php echo $networkName ?>"><?php echo $networkName ?></a>
@@ -227,7 +226,7 @@
                     </div>
                 </div>
                 <?php
-        }?>
+                }?>
             </div>
         </div>
 

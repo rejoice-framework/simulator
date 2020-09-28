@@ -38,11 +38,11 @@ class HTTP
             $customCurlOptions
         );
 
-        $curl_handle = curl_init();
-        curl_setopt_array($curl_handle, $curlOptions);
-        $result = curl_exec($curl_handle);
-        $err = curl_error($curl_handle);
-        curl_close($curl_handle);
+        $curlHandle = curl_init();
+        curl_setopt_array($curlHandle, $curlOptions);
+        $result = curl_exec($curlHandle);
+        $err = curl_error($curlHandle);
+        curl_close($curlHandle);
 
         $response = [
             'SUCCESS' => true,
