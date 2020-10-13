@@ -1,84 +1,23 @@
 <?php
 
-    $hostAutoload = __DIR__.'/../../../autoload.php';
+    $hostAutoload = __DIR__.'/../../autoload.php';
     $localAutoload = __DIR__.'/vendor/autoload.php';
 
     require_once file_exists($hostAutoload) ? $hostAutoload : $localAutoload;
 
     use function Prinx\Dotenv\env;
-    use Prinx\Utils\DB;
+    use Rejoice\Simulator\Libs\Simulator;
 
     $env = env('APP_ENV', 'prod');
-    $rawSimulatorData = '{}';
+    $ussds = Simulator::retrieveSavedUssdEndpoints();
+    $endpoints = Simulator::groupUssdBy('endpoint', $ussds);
 
-    $jsonFile = realpath(__DIR__.'/../../../../simulator.json') ?:
+    $simulatorConfig = realpath(__DIR__.'/../../../simulator.json') ?:
     realpath(__DIR__.'/simulator.json');
 
-    if (file_exists($jsonFile)) {
-        $rawSimulatorData = file_get_contents($jsonFile);
-    }
-
+    $rawSimulatorData = file_exists($simulatorConfig) ? file_get_contents($simulatorConfig) : '{}';
     $data = json_decode($rawSimulatorData, true);
     $networks = $data['networks'] ?? [];
-
-    function groupUssdBy(string $column, array $ussds)
-    {
-        $columns = ['id', 'app_name', 'network', 'code', 'url'];
-
-        if (!in_array($column, $columns)) {
-            return [];
-        }
-
-        $grouped = [];
-        foreach ($ussds as $ussd) {
-            if (!isset($grouped[$ussd[$column]])) {
-                $grouped[$ussd[$column]] = [];
-            }
-
-            $group = [];
-            foreach ($columns as $value) {
-                if ($value !== $column) {
-                    $group[$value] = $ussd[$value];
-                }
-            }
-
-            $grouped[$ussd[$column]][] = $group;
-        }
-
-        return $grouped;
-    }
-
-    function retrieveSavedUssdEndpoints()
-    {
-        $params = [
-            'driver'   => env('USSD_ENDPOINT_DRIVER', 'mysql'),
-            'host'     => env('USSD_ENDPOINT_HOST', 'localhost'),
-            'port'     => env('USSD_ENDPOINT_PORT', 3306),
-            'dbname'   => env('USSD_ENDPOINT_DB', ''),
-            'user'     => env('USSD_ENDPOINT_DB_USER', ''),
-            'password' => env('USSD_ENDPOINT_DB_PASS', ''),
-        ];
-
-        try {
-            $db = DB::load($params);
-        } catch (\Throwable $th) {
-            return [];
-        }
-
-        $ussdTable = env('USSD_ENDPOINT_DB_TABLE', '');
-        $numUssdEnpointsToRetrieve = env('USSD_ENDPOINT_NUM_TO_RETRIEVE', 300);
-
-        $stmt = $db->prepare("SELECT * FROM `$ussdTable` ORDER BY id DESC LIMIT :to_retrieve");
-        $stmt->bindParam('to_retrieve', $numUssdEnpointsToRetrieve, \PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        return $result;
-    }
-
-    $ussds = retrieveSavedUssdEndpoints();
-    $endpoints = groupUssdBy('endpoint', $ussds);
-
 ?>
 
 <!DOCTYPE html>
@@ -128,15 +67,15 @@
                     <select id="retrieved-phone-number" class="custom-select">
                         <option selected disabled>Choose a test phone</option>
                         <?php foreach ($networks as $networkName => $networkData) {
-    $testPhones = $networkData['test_phones'] ?? []?>
+                            $testPhones = $networkData['test_phones'] ?? []?>
                         <optgroup label="<?php echo $networkName ?>">
                             <?php foreach ($testPhones as $number => $phoneData) {?>
                             <option data-mnc="<?php echo $networkData['mnc'] ?? '' ?>" value="<?php echo $number ?>">
                                 <?php echo $phoneData['name'] ?? $number ?></option>
-                            <?php } ?>
+                            <?php }?>
                         </optgroup>
                         <?php
-}?>
+                        }?>
                     </select>
                 </div>
                 <div class="form-field form-group">
@@ -151,6 +90,8 @@
                         </option>
                         <?php }?>
 <?php } else {?>
+
+use Rejoice\Simulator\Libs\Simulator;
                         <option disabled selected>No network configured.</option>
                         <?php }?>
                     </select>
@@ -261,7 +202,7 @@
         </div>
     </main>
 
-    <?php $httpType = $_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'] ? 'http' : 'https'; ?>
+    <?php $httpType = $_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'] ? 'http' : 'https';?>
     <div class="d-none" id="pageUrl"><?php echo $httpType.'://'.$_SERVER['HTTP_HOST']; ?></div>
 
     <div class="d-none" id="simulator-data"><?php echo $rawSimulatorData ?></div>
