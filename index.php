@@ -1,12 +1,9 @@
 <?php
 
-    $autoload = __DIR__.'/../../../autoload.php';
+    $hostAutoload = __DIR__.'/../../../autoload.php';
+    $localAutoload = __DIR__.'/vendor/autoload.php';
 
-    if (!file_exists($autoload)) {
-        $autoload = __DIR__.'/vendor/autoload.php';
-    }
-
-    require_once $autoload;
+    require_once file_exists($hostAutoload) ? $hostAutoload : $localAutoload;
 
     use function Prinx\Dotenv\env;
     use Prinx\Utils\DB;
@@ -131,15 +128,15 @@
                     <select id="retrieved-phone-number" class="custom-select">
                         <option selected disabled>Choose a test phone</option>
                         <?php foreach ($networks as $networkName => $networkData) {
-    $testPhones = $networkData['test_phones'] ?? []?>
+                            $testPhones = $networkData['test_phones'] ?? []?>
                         <optgroup label="<?php echo $networkName ?>">
                             <?php foreach ($testPhones as $number => $phoneData) {?>
                             <option data-mnc="<?php echo $networkData['mnc'] ?? '' ?>" value="<?php echo $number ?>">
                                 <?php echo $phoneData['name'] ?? $number ?></option>
-                            <?php } ?>
+                            <?php }?>
                         </optgroup>
                         <?php
-}?>
+                        }?>
                     </select>
                 </div>
                 <div class="form-field form-group">
@@ -264,7 +261,7 @@
         </div>
     </main>
 
-    <?php $httpType = $_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'] ? 'http' : 'https'; ?>
+    <?php $httpType = $_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'] ? 'http' : 'https';?>
     <div class="d-none" id="pageUrl"><?php echo $httpType.'://'.$_SERVER['HTTP_HOST']; ?></div>
 
     <div class="d-none" id="simulator-data"><?php echo $rawSimulatorData ?></div>
