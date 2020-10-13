@@ -19,6 +19,12 @@ class Simulator
     protected $request = null;
     protected $endpoint = '';
     protected $payload = [];
+    protected static $index = __DIR__.'/../../';
+
+    public static function serve($ip = '127.0.0.8', $port = '8000')
+    {
+        passthru('php -S '.$ip.':'.$port.' -t "'.static::$index.'"', $return);
+    }
 
     /**
      * Capture the request coming from the simulator interface, send the
@@ -84,8 +90,8 @@ class Simulator
     /**
      * Log the response if response cannot be parse to JSON.
      *
-     * @param Response $response
      *
+     * @param  Response $response
      * @return void
      */
     public function log(Response $response)

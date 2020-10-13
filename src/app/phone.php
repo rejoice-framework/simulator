@@ -1,12 +1,9 @@
 <?php
 
-    $autoload = __DIR__.'/../../../autoload.php';
+    $hostAutoload = __DIR__.'/../../../../autoload.php';
+    $localAutolaod = __DIR__.'/../../vendor/autoload.php';
 
-    if (!file_exists($autoload)) {
-        $autoload = __DIR__.'/../../vendor/autoload.php';
-    }
-
-    require_once $autoload;
+    require_once file_exists($hostAutoload) ? $hostAutoload : $localAutolaod;
 
     session_start();
 
@@ -30,7 +27,7 @@
 
     $data = [];
     $jsonFile = realpath(__DIR__.'/../../../../../simulator.json') ?:
-        realpath(__DIR__.'/../../simulator.json');
+    realpath(__DIR__.'/../../simulator.json');
 
     if (file_exists($jsonFile)) {
         $data = json_decode(file_get_contents($jsonFile), true);
@@ -148,7 +145,7 @@
 
         <?php
             if ($networks) {
-                ?>
+            ?>
         <div class="row justify-content-center">
             <div class="col-md-6 my-3">
                 <h3>Add new test phone</h3>
@@ -177,7 +174,7 @@
                                 <?php echo $networkName ?>
                             </option>
                             <?php
-                            } ?>
+                            }?>
                         </select>
                     </div>
                     <div class="form-field">
@@ -189,14 +186,14 @@
                 <h3 class=""> Saved phones numbers</h3>
                 <small class="text-muted">Click on a phone number to edit it</small>
                 <?php foreach ($networks as $networkName => $networkData) {
-                                ?>
+                        ?>
                 <div class="card my-2 rounded-0 border-top-0">
                     <div class="card-header row">
                         <div class="text-primary col-8" title="Modify this network"><a href="network.php?network=<?php echo $networkName ?>"><?php echo $networkName ?></a>
                         </div>
 
                         <!-- <div class="col">
-                            mnc:                                 <?php /* echo $networkData['mnc'] ?? 'MNC not defined' */?>
+                            mnc:                                                                                                                                 <?php /* echo $networkData['mnc'] ?? 'MNC not defined' */?>
                         </div> -->
                     </div>
                     <div class="card-body">
@@ -204,15 +201,15 @@
                         <div class="card-text row justify-content-center">
                             <div>
                                 <?php $phones = $networkData['test_phones'] ?? [];
-                                if (!$phones) {?>
+                                        if (!$phones) {?>
                                 <i>No phone number added here.</i>
                                 <?php } else {
-                                    ?>
+                                            ?>
                                 <table class="bg-white table table-responsive table-hover">
                                     <tbody>
                                         <?php foreach ($phones as $number => $phoneData) {
-                                        if ($number) {
-                                            ?>
+                                                            if ($number) {
+                                                            ?>
                                         <tr data-network="<?php echo $networkName ?>" title="Click to edit" class="<?php echo (isset($newPhone) && $newPhone == $number/* Do not use strict comparison here */) ? ' new-phone' : '' ?> phone-number-row">
                                             <td scope="row" class="phone-number">
                                                 <?php echo $number ?>
@@ -231,22 +228,22 @@
                                             </td>
                                         </tr>
                                         <?php
-                                        }
-                                    } ?>
+                                            }
+                                                    }?>
                                     </tbody>
                                 </table>
                                 <?php
-                                } ?>
+                                }?>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
-                            } ?>
+                }?>
             </div>
         </div>
         <?php
-            } else {?>
+        } else {?>
         <div class="alert alert-info">No network not defined. Every number must belong to a previously defined
             network.
             Kindly

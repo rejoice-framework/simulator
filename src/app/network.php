@@ -1,12 +1,9 @@
 <?php
 
-    $autoload = __DIR__.'/../../../autoload.php';
+    $hostAutoload = __DIR__.'/../../../../autoload.php';
+    $localAutolaod = __DIR__.'/../../vendor/autoload.php';
 
-    if (!file_exists($autoload)) {
-        $autoload = __DIR__.'/../../vendor/autoload.php';
-    }
-
-    require_once $autoload;
+    require_once file_exists($hostAutoload) ? $hostAutoload : $localAutolaod;
 
     session_start();
 
@@ -28,48 +25,10 @@
         unset($_SESSION['new-phone']);
     }
 
-    $data = [];
     $jsonFile = (realpath(__DIR__.'/../../../../../simulator.json') ?:
         realpath(__DIR__.'/../../simulator.json'));
-    echo $jsonFile;
 
-    if (file_exists($jsonFile)) {
-        $data = json_decode(file_get_contents($jsonFile), true);
-    }
-
-    /*
-    function checkNumberNameExists($name, $networks)
-    {
-    // This is to search for duplicate name and mnc when the user wants to add a
-    // new network. Not efficient but cool if the data is not too much - I was
-    // implementing an index-like system to quickly index the mnc and the name. So
-    // that I can quickly check for duplicate but... infosevo is waiting for me. I
-    // need to leave this.
-
-    foreach ($networks as $networkData) {
-    $testPhones = $networkData['test_phones'];
-
-    foreach ($testPhones as $number => $value) {
-    if ($value['name'] === $name) {
-    return false;
-    }
-    }
-    }
-
-    return true;
-    }
-
-    function checkMncExists($mnc, $networks)
-    {
-    foreach ($networks as $networkData) {
-    if ($networkData['mnc'] == $mnc) {
-    return false;
-    }
-    }
-
-    return true;
-    }
-     */
+    $data = file_exists($jsonFile) ? json_decode(file_get_contents($jsonFile), true) : [];
 
     $networks = $data['networks'] ?? [];
 
@@ -211,13 +170,13 @@
                 <h3 class=""> Saved networks</h3>
                 <small class="text-muted">Click on a network to edit it</small>
                 <?php foreach ($networks as $networkName => $networkData) {
-            ?>
+                    ?>
                 <div class="card my-2 rounded-0 border-top-0 network-container">
                     <div class="card-header row">
                         <div class="text-primary col-6" title="Modify this network"><a href="?network=<?php echo $networkName ?>"><?php echo $networkName ?></a>
                         </div>
                         <div class="col-4">
-                            mnc: <?php echo htmlspecialchars($networkData['mnc']) ?? 'MNC not defined' ?>
+                            mnc:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <?php echo htmlspecialchars($networkData['mnc']) ?? 'MNC not defined' ?>
                         </div>
                         <div class="col-2">
                             <form method="POST" action="" title="Delete this network" class="delete-network">
@@ -235,7 +194,7 @@
                     </div>
                 </div>
                 <?php
-        }?>
+                }?>
             </div>
         </div>
 
