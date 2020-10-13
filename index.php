@@ -11,8 +11,8 @@
     $env = env('APP_ENV', 'prod');
     $rawSimulatorData = '{}';
 
-    $relPath = realpath(__DIR__.'/../../../../') ?: '.';
-    $jsonFile = $relPath.'/simulator.json';
+    $jsonFile = realpath(__DIR__.'/../../../../simulator.json') ?:
+    realpath(__DIR__.'/simulator.json');
 
     if (file_exists($jsonFile)) {
         $rawSimulatorData = file_get_contents($jsonFile);
