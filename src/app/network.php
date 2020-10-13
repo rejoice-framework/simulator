@@ -1,6 +1,13 @@
 <?php
 
-    require_once __DIR__.'/../../../../autoload.php';
+    $autoload = __DIR__.'/../../../autoload.php';
+
+    if (!file_exists($autoload)) {
+        $autoload = __DIR__.'/../../vendor/autoload.php';
+    }
+
+    require_once $autoload;
+
     session_start();
 
     $error = null;
@@ -22,7 +29,9 @@
     }
 
     $data = [];
-    $jsonFile = realpath(__DIR__.'/../../../../../').'/simulator.json';
+    $jsonFile = (realpath(__DIR__.'/../../../../../simulator.json') ?: 
+        realpath(__DIR__.'/../../simulator.json'));
+    echo $jsonFile;
 
     if (file_exists($jsonFile)) {
         $data = json_decode(file_get_contents($jsonFile), true);
@@ -152,7 +161,7 @@
 <body style="line-height: normal; font-size:initial; font-family: initial; color:initial">
     <header>
         <div class="toggle-controls" title="Controls">&Congruent;</div>
-        <div class="m-2 ml-4" style="display:inline-block;"><a href="/" class="ml-4">Simulator</a> </div>
+        <div class="m-2 ml-4" style="display:inline-block;"><a href="../../" class="ml-4">Simulator</a> </div>
         <div class="m-2" style="display:inline-block;"><a href="phone.php">Manage phones</a></div>
     </header>
 

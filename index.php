@@ -1,5 +1,12 @@
 <?php
-    require_once __DIR__.'/../../../autoload.php';
+
+    $autoload = __DIR__.'/../../../autoload.php';
+
+    if (!file_exists($autoload)) {
+        $autoload = __DIR__.'/vendor/autoload.php';
+    }
+
+    require_once $autoload;
 
     use function Prinx\Dotenv\env;
     use Prinx\Utils\DB;
@@ -7,7 +14,9 @@
     $env = env('APP_ENV', 'prod');
     $rawSimulatorData = '{}';
 
-    $jsonFile = realpath(__DIR__.'/../../../../').'/simulator.json';
+    $relPath = realpath(__DIR__.'/../../../../') ?: '.';
+    $jsonFile = $relPath.'/simulator.json';
+
     if (file_exists($jsonFile)) {
         $rawSimulatorData = file_get_contents($jsonFile);
     }
@@ -83,16 +92,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>USSD SIMULATOR</title>
     <link rel="icon" href="favicon.png" />
-    <link rel="stylesheet" href="public/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="src/public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="src/public/css/style.css">
 </head>
 
 <body style="line-height:normal; font-size:initial; font-family:initial; color:initial">
     <header>
         <div class="toggle-controls" title="Controls">&Congruent;</div>
-        <div class="m-2 ml-4" style="display:inline-block;"><a href="app/network.php" class="ml-4">Manage
+        <div class="m-2 ml-4" style="display:inline-block;"><a href="src/app/network.php" class="ml-4">Manage
                 Networks</a> </div>
-        <div class="m-2" style="display:inline-block;"><a href="app/phone.php">Manage Phones</a></div>
+        <div class="m-2" style="display:inline-block;"><a href="src/app/phone.php">Manage Phones</a></div>
     </header>
 
     <main class="container">
@@ -122,15 +131,15 @@
                     <select id="retrieved-phone-number" class="custom-select">
                         <option selected disabled>Choose a test phone</option>
                         <?php foreach ($networks as $networkName => $networkData) {
-    $testPhones = $networkData['test_phones'] ?? []?>
+                            $testPhones = $networkData['test_phones'] ?? []?>
                         <optgroup label="<?php echo $networkName ?>">
                             <?php foreach ($testPhones as $number => $phoneData) {?>
                             <option data-mnc="<?php echo $networkData['mnc'] ?? '' ?>" value="<?php echo $number ?>">
                                 <?php echo $phoneData['name'] ?? $number ?></option>
-                            <?php } ?>
+                            <?php }?>
                         </optgroup>
                         <?php
-}?>
+                        }?>
                     </select>
                 </div>
                 <div class="form-field form-group">
@@ -255,7 +264,7 @@
         </div>
     </main>
 
-    <?php $httpType = $_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'] ? 'http' : 'https'; ?>
+    <?php $httpType = $_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'] ? 'http' : 'https';?>
     <div class="d-none" id="pageUrl"><?php echo $httpType.'://'.$_SERVER['HTTP_HOST']; ?></div>
 
     <div class="d-none" id="simulator-data"><?php echo $rawSimulatorData ?></div>
@@ -302,8 +311,8 @@
         </div>
     </template>
 
-    <script src="public/js/jquery-3.1.0.min.js"></script>
-    <script src="public/js/ussdsim.js"></script>
+    <script src="src/public/js/jquery-3.1.0.min.js"></script>
+    <script src="src/public/js/ussdsim.js"></script>
 </body>
 
 </html>
