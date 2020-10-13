@@ -12,12 +12,9 @@
 namespace Rejoice\Simulator\Libs;
 
 use function Prinx\Dotenv\env;
-use PDO;
 use Prinx\Notify\Log;
 use Prinx\Utils\DB;
 use Prinx\Utils\HTTP;
-use Rejoice\Simulator\Libs\Request;
-use Rejoice\Simulator\Libs\Response;
 
 class Simulator
 {
@@ -152,7 +149,8 @@ class Simulator
      *
      *
      *
-     * @param  Response $response
+     * @param Response $response
+     *
      * @return void
      */
     public function log(Response $response)
