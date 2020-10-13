@@ -29,7 +29,7 @@
     }
 
     $data = [];
-    $jsonFile = (realpath(__DIR__.'/../../../../../simulator.json') ?: 
+    $jsonFile = (realpath(__DIR__.'/../../../../../simulator.json') ?:
         realpath(__DIR__.'/../../simulator.json'));
     echo $jsonFile;
 
