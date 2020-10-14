@@ -6,7 +6,7 @@ $(document).ready(function () {
   const APP_REQUEST_ASK_USER_RESPONSE = $('#ussd-request-ask-user-response-code').text().trim();
   const APP_REQUEST_USER_SENT_RESPONSE = $('#ussd-request-user-sent-response-code').text().trim();
 
-  const SIMULATOR_USSD_API_ENDPOINT = "api/v1/ussd.php"
+  const SIMULATOR_USSD_API_ENDPOINT = "src/api/v1/ussd.php"
   const simulatorData = JSON.parse($('#simulator-data').text());
   const networks = simulatorData.networks || {};
   const simulatorMetadata = ['info', 'warning', 'error']
