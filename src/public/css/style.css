@@ -364,6 +364,14 @@ button {
   transition: all 0.5s ease;
 }
 
+#simulator-debug div {
+	font-size: small;
+}
+
+#simulator-debug > div {
+	max-height: 60vh;
+	overflow: auto;
+}
 /* #controls > div {
   padding-left: 30px;
 } */
