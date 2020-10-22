@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3234107668e9105300b63ce558753a8",
+    "content-hash": "3b8a100f02b9573701a27fdc6357e560",
     "packages": [
         {
             "name": "prinx/dotenv",
-            "version": "dev-master",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/prinx/dotenv.git",
@@ -59,7 +59,7 @@
         },
         {
             "name": "prinx/notify",
-            "version": "dev-master",
+            "version": "v0.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/prinx/notify.git",
@@ -101,7 +101,7 @@
         },
         {
             "name": "prinx/phputils",
-            "version": "dev-master",
+            "version": "v0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/prinx/phputils.git",
@@ -146,11 +146,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "prinx/phputils": 20,
-        "prinx/notify": 20,
-        "prinx/dotenv": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
