@@ -22,7 +22,7 @@
     "php": ">=5.6.0",
     "prinx/dotenv": "^0.4.2",
     "prinx/notify": "^0.0.1",
-    "prinx/phputils": "^0.0.2"
+    "prinx/phputils": "^0.0.3"
   },
   "config": {
     "optimize-autoloader": true

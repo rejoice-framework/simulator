@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b8a100f02b9573701a27fdc6357e560",
+    "content-hash": "e851327be13c6d030d5ae2d89b9ba68e",
     "packages": [
         {
             "name": "prinx/dotenv",
@@ -101,16 +101,16 @@
         },
         {
             "name": "prinx/phputils",
-            "version": "v0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/prinx/phputils.git",
-                "reference": "cb685347376f0ead28769716d4f53ef0b05f0bba"
+                "reference": "84c3ce1483f6c1db6ad3f4532555b452c4f2064a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/prinx/phputils/zipball/cb685347376f0ead28769716d4f53ef0b05f0bba",
-                "reference": "cb685347376f0ead28769716d4f53ef0b05f0bba",
+                "url": "https://api.github.com/repos/prinx/phputils/zipball/84c3ce1483f6c1db6ad3f4532555b452c4f2064a",
+                "reference": "84c3ce1483f6c1db6ad3f4532555b452c4f2064a",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "php",
                 "utils"
             ],
-            "time": "2020-10-01T10:57:02+00:00"
+            "time": "2020-10-22T14:42:29+00:00"
         }
     ],
     "packages-dev": [],
