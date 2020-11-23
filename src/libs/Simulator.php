@@ -68,19 +68,19 @@ class Simulator
 
         try {
             $db = DB::load($params);
+
+            $ussdTable = env('USSD_ENDPOINT_DB_TABLE', '');
+            $numUssdEnpointsToRetrieve = env('USSD_ENDPOINT_NUM_TO_RETRIEVE', 300);
+
+            $stmt = $db->prepare("SELECT * FROM `$ussdTable` ORDER BY id DESC LIMIT :to_retrieve");
+            $stmt->bindParam('to_retrieve', $numUssdEnpointsToRetrieve, \PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            return $result;
         } catch (\Throwable $th) {
             return [];
         }
-
-        $ussdTable = env('USSD_ENDPOINT_DB_TABLE', '');
-        $numUssdEnpointsToRetrieve = env('USSD_ENDPOINT_NUM_TO_RETRIEVE', 300);
-
-        $stmt = $db->prepare("SELECT * FROM `$ussdTable` ORDER BY id DESC LIMIT :to_retrieve");
-        $stmt->bindParam('to_retrieve', $numUssdEnpointsToRetrieve, \PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        return $result;
     }
 
     /**
