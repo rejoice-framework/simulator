@@ -11,10 +11,10 @@
 
 namespace Rejoice\Simulator\Libs;
 
-use function Prinx\Dotenv\env;
 use Prinx\Notify\Log;
 use Prinx\Utils\DB;
 use Prinx\Utils\HTTP;
+use function Prinx\Dotenv\env;
 
 class Simulator
 {
@@ -58,11 +58,11 @@ class Simulator
     public static function retrieveSavedUssdEndpoints()
     {
         $params = [
-            'driver'   => env('USSD_ENDPOINT_DRIVER', 'mysql'),
-            'host'     => env('USSD_ENDPOINT_HOST', 'localhost'),
-            'port'     => env('USSD_ENDPOINT_PORT', 3306),
-            'dbname'   => env('USSD_ENDPOINT_DB', ''),
-            'user'     => env('USSD_ENDPOINT_DB_USER', ''),
+            'driver' => env('USSD_ENDPOINT_DRIVER', 'mysql'),
+            'host' => env('USSD_ENDPOINT_HOST', 'localhost'),
+            'port' => env('USSD_ENDPOINT_PORT', 3306),
+            'dbname' => env('USSD_ENDPOINT_DB', ''),
+            'user' => env('USSD_ENDPOINT_DB_USER', ''),
             'password' => env('USSD_ENDPOINT_DB_PASS', ''),
         ];
 
@@ -106,10 +106,10 @@ class Simulator
     public function captureIncomingRequest()
     {
         try {
-            $this->request = new Request;
+            $this->request = new Request();
         } catch (\Throwable $th) {
             exit(json_encode([
-                'error'   => $th->getMessage(),
+                'error' => $th->getMessage(),
                 'SUCCESS' => false,
             ]));
         }
@@ -146,10 +146,6 @@ class Simulator
 
     /**
      * Log the response if response cannot be parse to JSON.
-     *
-     *
-     *
-     * @param Response $response
      *
      * @return void
      */
